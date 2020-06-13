@@ -1,2 +1,2 @@
-# 79Nebula_Godot
+# 79Nebula
 C# Godot Game for Android
