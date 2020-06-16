@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="79Nebula"
-run/main_scene="res://79Nebula/Views/App.tscn"
+run/main_scene="res://79Nebula/Scenes/App.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 config/icon="res://79Nebula/icon.png"
