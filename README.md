@@ -1,2 +1,4 @@
 # 79Nebula
-C# Godot Game for Android
+Android Game developed with the Godot Engine.
+
+Development started in 2020 June.
