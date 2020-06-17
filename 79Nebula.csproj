@@ -53,6 +53,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="79Nebula\Models\PlayerCore.cs" />
     <Compile Include="79Nebula\Scripts\Button_Count_Increase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
