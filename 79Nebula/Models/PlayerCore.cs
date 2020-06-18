@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    class PlayerCore
+    public class PlayerCore
     {
         // Player's name
         public readonly string Name;
@@ -21,8 +21,10 @@ namespace Nebula._79Nebula.Models
         // Base Intelligence (Int)
         public readonly int Intelligence;
 
-        // List of skills the player has.
-        public readonly List<string> Skills;
+        // List of modules (skills) the player has.
+        public readonly List<string> Modules;
+
+
 
         // Determines how much health one point in vitality gives.
         // Vitality = 2 * Str + Agi
@@ -73,12 +75,12 @@ namespace Nebula._79Nebula.Models
             Strength = strength;
             Agility = agility;
             Intelligence = intelligence;
-            Skills = skills;
+            Modules = skills;
         }
 
         public override string ToString()
         {
-            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, {Skills.ToString()}";
+            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, {Modules.ToString()}";
         }
 
     }
