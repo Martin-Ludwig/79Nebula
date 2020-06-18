@@ -22,6 +22,8 @@ namespace Nebula._79Nebula.Modules
         public override void Activate(Player user, Player opponent)
         {
             Debug.WriteLine("Pew pew!");
+            user.ModifyStrengthBy(1);
+            opponent.ModifyStrengthBy(-1);
         }
     }
 }

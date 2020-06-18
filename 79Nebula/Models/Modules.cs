@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    static class Modules
+    public static class Modules
     {
 
         public static Dictionary<MODULE, Module> Get = new Dictionary<MODULE, Module> {

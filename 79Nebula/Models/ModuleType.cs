@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    enum ModuleType
+    public enum ModuleType
     {
         Untyped,
         Attack,

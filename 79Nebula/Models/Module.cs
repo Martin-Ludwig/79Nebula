@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    abstract class Module
+    public abstract class Module
     {
         public string Name { get; set; }
 
@@ -20,9 +20,6 @@ namespace Nebula._79Nebula.Models
         {
 
         }
-
-        // Module is used to access modules by enum or int
-        // public Module(MODULE module) => Modules.get[module];
 
         /// <summary>
         /// Function behind the module.
