@@ -20,7 +20,17 @@ namespace Tests
             Player player = new Player("name", 1, 1, 1, new List<String> { } );
             Player player1 = new Player("Player 1", 1, 1, 1, new List<String> { });
 
-            Module m = Modules.Get[MODULE._default];
+            Module m;
+            try
+            {
+                m = Modules.Get("0");
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+                throw;
+            }
+
             m.Activate(player, player1);
 
             Assert.AreEqual(2, player.Strength);

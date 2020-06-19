@@ -15,14 +15,13 @@ namespace Nebula._79Nebula.Models
         public ModuleType ModuleType { get; set; }
         public string Description { get; set; }
 
-        // construct is used by the inherited classes.
         public Module()
         {
 
         }
 
         /// <summary>
-        /// Function behind the module.
+        /// Unique function behind the module.
         /// </summary>
         public abstract void Activate(Player user, Player opponent);
 

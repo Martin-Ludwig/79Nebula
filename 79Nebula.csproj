@@ -56,6 +56,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="79Nebula\Exceptions\ModuleNotFoundException.cs" />
     <Compile Include="79Nebula\Models\Module.cs" />
     <Compile Include="79Nebula\Models\Modules.cs" />
     <Compile Include="79Nebula\Models\ModuleType.cs" />

@@ -10,7 +10,6 @@ namespace Nebula._79Nebula.Modules
 {
     class _ExampleModule : Module
     {
-
         public _ExampleModule()
         {
             Name = "Example Module";
@@ -21,7 +20,7 @@ namespace Nebula._79Nebula.Modules
 
         public override void Activate(Player user, Player opponent)
         {
-            Debug.WriteLine("Pew pew!");
+            Console.WriteLine("Pew pew!");
             user.ModifyStrengthBy(1);
             opponent.ModifyStrengthBy(-1);
         }
