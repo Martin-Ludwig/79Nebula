@@ -1,3 +1,4 @@
+using Nebula._79Nebula.Effects;
 using Nebula._79Nebula.Models;
 using NUnit.Framework;
 using System;
@@ -40,6 +41,41 @@ namespace Tests
             Console.WriteLine(player1);
 
             Assert.Pass();
+        }
+
+        [Test]
+        public void ApplyEffectTest()
+        {
+            Player player = new Player("name", 1, 1, 1, new List<String> { });
+
+            player.ApplyEffect(new InitiatorBonus());
+
+            if (player.HasEffect(new InitiatorBonus()))
+            {
+                Assert.Pass();
+            }
+
+            Assert.Fail();
+
+        }
+
+        [Test]
+        public void RemoveEffectTest()
+        {
+            Player player = new Player("name", 1, 1, 1, new List<String> { });
+
+            player.ApplyEffect(new InitiatorBonus());
+
+            if (player.HasEffect(new InitiatorBonus()))
+            {
+                player.RemoveEffect(new InitiatorBonus());
+                if (!player.HasEffect(new InitiatorBonus()))
+                {
+                    Assert.Pass();
+                }
+            }
+
+            Assert.Fail();
         }
     }
 }

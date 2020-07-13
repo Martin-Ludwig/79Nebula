@@ -8,18 +8,13 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    public class Modules
+    public static class Modules
     {
-        public Modules()
-        {
-            
-        }
 
         private static Dictionary<MODULE, Module> _modules = new Dictionary<MODULE, Module> {
             { MODULE.Default, new _ExampleModule() }
         };
 
-      
 
         public static Module Get(MODULE module)
         {

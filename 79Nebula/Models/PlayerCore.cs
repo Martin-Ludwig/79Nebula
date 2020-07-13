@@ -69,13 +69,13 @@ namespace Nebula._79Nebula.Models
             get { return HealthBase + Vitality * VitalityMultiplier; }
         }
 
-        public PlayerCore(string name, int strength, int agility, int intelligence, List<string> skills)
+        public PlayerCore(string name, int strength, int agility, int intelligence, List<string> modules)
         {
             Name = name;
             Strength = strength;
             Agility = agility;
             Intelligence = intelligence;
-            Modules = skills;
+            Modules = modules;
         }
 
         public override string ToString()
