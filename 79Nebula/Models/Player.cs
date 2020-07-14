@@ -28,7 +28,7 @@ namespace Nebula._79Nebula.Models
             : base(name, strength, agility, intelligence, modules)
         {
             // Load modules
-            // Convert from string to module
+            // Convert string to module
             try
             {
                 Modules = new List<Module>();
@@ -39,8 +39,10 @@ namespace Nebula._79Nebula.Models
                 }
             } catch (ModuleNotFoundException e)
             {
-                throw e;
+                throw new ModuleNotFoundException($"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). \n\t{e}");
             }
+
+            Effects = new List<Effect>();
 
         }
 
@@ -115,26 +117,56 @@ namespace Nebula._79Nebula.Models
             return Modules.ElementAt(i).Priority;
         }
 
-        public void ApplyEffect(Effect effect)
+        public bool ApplyEffect(Effect effect)
         {
             Effects.Add(effect);
             effect.OnApply(this);
+
+            return true;
         }
 
-        public void RemoveEffect(Effect effect)
+        public bool RemoveEffect(Effect effect)
         {
-            Effects.Remove(effect);
-            effect.OnRemove(this);
+            Effect e;
+            e = Effects.Find(o => o.Name == effect.Name);
+
+            if (e != null)
+            {
+                e.OnRemove(this);
+                Effects.Remove(e);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public bool HasEffect(Effect effect)
+        public bool RemoveEffect(int hashcode)
         {
-            return Effects.Contains(effect);
+            if (Effects.RemoveAll(o => o.GetHashCode() == hashcode) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns the amount of how often the effect is applied to the player.
+        /// </summary>
+        public int HasEffect(Effect effect)
+        {
+            int n = Effects.FindAll(o => o.Name == effect.Name).Count;
+
+            return n;
         }
 
         public override string ToString()
         {
-            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, {Modules.ToString()}";
+            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, Modules: [{string.Join(",",Modules)}]";
         }
 
     }

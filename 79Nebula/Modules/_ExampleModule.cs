@@ -1,4 +1,5 @@
-﻿using Nebula._79Nebula.Models;
+﻿using Nebula._79Nebula.Enums;
+using Nebula._79Nebula.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

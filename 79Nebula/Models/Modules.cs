@@ -24,7 +24,7 @@ namespace Nebula._79Nebula.Models
             }
             catch (Exception)
             {
-                throw new ModuleNotFoundException($"Module {module} not found.");
+                throw new ModuleNotFoundException($"Module \"{module}\" not found.");
             }
         }
         public static Module Get(int id)
@@ -51,7 +51,7 @@ namespace Nebula._79Nebula.Models
             }
             else
             {
-                throw new ModuleNotFoundException($"Module {name} not found.");
+                throw new ModuleNotFoundException($"Module \"{name}\" not found.");
             }
         }
 

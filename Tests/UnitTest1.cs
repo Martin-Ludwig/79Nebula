@@ -14,6 +14,11 @@ namespace Tests
         {
         }
 
+        [Test]
+        public void Test()
+        {
+
+        }
 
         [Test]
         public void Test2()
@@ -48,34 +53,20 @@ namespace Tests
         {
             Player player = new Player("name", 1, 1, 1, new List<String> { });
 
+            Console.WriteLine(player);
+
+            Effect e = new InitiatorBonus();
             player.ApplyEffect(new InitiatorBonus());
 
-            if (player.HasEffect(new InitiatorBonus()))
-            {
-                Assert.Pass();
-            }
+            Console.WriteLine(player);
 
-            Assert.Fail();
-
+            Assert.AreEqual(2, player.Strength);
+            Assert.AreEqual(2, player.Agility);
+            Assert.AreEqual(2, player.Intelligence);
+            
+            Assert.Pass();
         }
 
-        [Test]
-        public void RemoveEffectTest()
-        {
-            Player player = new Player("name", 1, 1, 1, new List<String> { });
 
-            player.ApplyEffect(new InitiatorBonus());
-
-            if (player.HasEffect(new InitiatorBonus()))
-            {
-                player.RemoveEffect(new InitiatorBonus());
-                if (!player.HasEffect(new InitiatorBonus()))
-                {
-                    Assert.Pass();
-                }
-            }
-
-            Assert.Fail();
-        }
     }
 }

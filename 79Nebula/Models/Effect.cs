@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nebula._79Nebula.Enums;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,23 +21,21 @@ namespace Nebula._79Nebula.Models
             EffectTypes = effectTypes;
         }
 
-        public void OnApply(Player player) { }
-        public void OnRemove(Player player) { }
+        /// <summary>
+        /// Triggers when this effect is applied to a player.
+        /// </summary>
+        public virtual void OnApply(Player player) { }
+
+        /// <summary>
+        /// Triggers when this effect is removed from a player.
+        /// </summary>
+        public virtual void OnRemove(Player player) { }
 
         public override string ToString()
         {
             return $"{Name}, Type: {EffectTypes}\n\t{Description}";
         }
 
-    }
 
-    public enum EffectType
-    {
-        untyped,
-        Buff,
-        Debuff,
-        Aura,
-        Condition,
-        Curse
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nebula._79Nebula.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
