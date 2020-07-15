@@ -10,15 +10,14 @@ namespace Nebula._79Nebula.Models
 {
     public abstract class Effect
     {
-        public readonly string Name;
-        public readonly string Description;
-        public readonly List<EffectType> EffectTypes;
+        public virtual string Name => "Example Effect";
+        public virtual string Description => "No description given.";
+        public virtual List<EffectType> EffectTypes => new List<EffectType>(){
+            EffectType.untyped
+        };
 
-        public Effect(string name, string desc, List<EffectType> effectTypes)
+        public Effect()
         {
-            Name = name;
-            Description = desc;
-            EffectTypes = effectTypes;
         }
 
         /// <summary>

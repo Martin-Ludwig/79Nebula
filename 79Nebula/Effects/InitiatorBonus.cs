@@ -11,18 +11,15 @@ namespace Nebula._79Nebula.Effects
 {
     public class InitiatorBonus : Effect
     {
+        public override string Name => "Initiator Bonus";
+        public override string Description => "Increases Strength, Agility and Intelligence by 1.";
+        public override List<EffectType> EffectTypes => new List<EffectType>(){
+            EffectType.Buff
+        };
 
         public InitiatorBonus()
-            : base(
-                  "Initiator Bonus",
-                  "Increases Strength, Agility and Intelligence by 1.",
-                  new List<EffectType> { 
-                      EffectType.Buff
-                  })
         {
-
         }
-
 
         public override void OnApply(Player player)
         {

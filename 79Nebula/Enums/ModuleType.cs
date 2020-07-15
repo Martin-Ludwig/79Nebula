@@ -10,6 +10,7 @@ namespace Nebula._79Nebula.Enums
     {
         Untyped,
         Attack,
-        Spell
+        Spell,
+        Aura
     }
 }

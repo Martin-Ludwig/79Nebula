@@ -12,18 +12,21 @@ namespace Nebula._79Nebula.Models
         public readonly string Name;
 
         // Strength, agility and intelligence are the main attributes a player has.
+        
         // Base Strength (Str)
+        // increased vitality by 2 and attack, defense and healing by 1
         public readonly int Strength;
 
         // Base Agility (Agi)
+        // increases initiative and defense by 2 and vitality by 1
         public readonly int Agility;
 
         // Base Intelligence (Int)
+        // increases attack and healing by 2 and initiative by 1
         public readonly int Intelligence;
 
         // List of modules (skills) the player has.
         public readonly List<string> Modules;
-
 
 
         // Determines how much health one point in vitality gives.

@@ -9,16 +9,15 @@ namespace Nebula._79Nebula.Models
 {
     public abstract class Module
     {
-        public string Name { get; set; }
-
+        public virtual string Name => "Example Module";
         ///The lower the number, the more priority the skill has.
-        public int Priority { get; set; }
-        public ModuleType ModuleType { get; set; }
-        public string Description { get; set; }
+        public virtual int Priority => 0;
+        public virtual List<ModuleType> ModuleTypes => new List<ModuleType>()
+                { ModuleType.Untyped };
+        public virtual string Description => "No description given.";
 
         public Module()
         {
-
         }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace Nebula._79Nebula.Models
 
         public override string ToString()
         {
-            return $"{Name} ({Priority}), Type: {ModuleType}\n\t{Description}";
+            return $"{Name} ({Priority}), Type: {ModuleTypes}\n\t{Description}";
         }
 
     }

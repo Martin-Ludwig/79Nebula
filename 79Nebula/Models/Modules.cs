@@ -11,8 +11,8 @@ namespace Nebula._79Nebula.Models
     public static class Modules
     {
 
-        private static Dictionary<MODULE, Module> _modules = new Dictionary<MODULE, Module> {
-            { MODULE.Default, new _ExampleModule() }
+        private static readonly Dictionary<MODULE, Module> _modules = new Dictionary<MODULE, Module> {
+            { MODULE.Default, new ExampleModule() }
         };
 
 
@@ -42,8 +42,7 @@ namespace Nebula._79Nebula.Models
         }
         public static Module Get(string name)
         {
-            MODULE module;
-            bool isModule = Enum.TryParse<MODULE>(name, out module);
+            bool isModule = Enum.TryParse<MODULE>(name, out MODULE module);
 
             if (isModule && Enum.IsDefined(typeof(MODULE), module))
             {
