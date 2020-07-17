@@ -23,12 +23,18 @@ namespace Nebula._79Nebula.Models
         public int CritBonus { get; set; } = 0;
 
         public new List<Module> Modules;
-        private List<Effect> Effects;
+
+        // Todo check readonly
+        private readonly List<Effect> Effects = new List<Effect>();
 
         private int _barrier = 0;
 
         public int Damaged { get; set; } = 0;
         public int Healed { get; set; } = 0;
+
+        /// <summary>
+        /// Can be up to a maximum of 50% health.
+        /// </summary>
         public int Barrier
         {
             get { return _barrier; }
@@ -61,8 +67,6 @@ namespace Nebula._79Nebula.Models
             {
                 throw new ModuleNotFoundException($"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). \n\t{e}");
             }
-
-            Effects = new List<Effect>();
 
         }
 
@@ -101,19 +105,6 @@ namespace Nebula._79Nebula.Models
         public new int Health
         {
             get { return base.Health + Healed - Damaged; }
-        }
-
-        /// <summary>
-        /// Increases Barrier up to 50% of Health value
-        /// </summary>
-        /// <param name="n"></param>
-        public void IncreaseBarrier(int n)
-        {
-            _barrier += n;
-            if (_barrier > Health/2 )
-            {
-                _barrier = (int) Health/2;
-            }
         }
 
         public int GetPriority(int i)
@@ -168,7 +159,7 @@ namespace Nebula._79Nebula.Models
             return n;
         }
 
-        private bool isCriticalAttack(Player opponent)
+        private bool IsCriticalAttack(Player opponent)
         {
             int crit = 0;
             crit += CritBonus;
@@ -193,7 +184,7 @@ namespace Nebula._79Nebula.Models
             }
         }
 
-        private bool isCriticalHealing()
+        private bool IsCriticalHealing()
         {
             int crit = 0;
             crit += CritBonus;
@@ -226,8 +217,10 @@ namespace Nebula._79Nebula.Models
 
             // Todo: Opponent Trigger OnBeforeDamageTaken
 
-            if (isCriticalAttack(opponent))
+            bool isCrit = false;
+            if (IsCriticalAttack(opponent))
             {
+                isCrit = true;
                 attackDamage += 2;
             }
             
@@ -238,17 +231,23 @@ namespace Nebula._79Nebula.Models
             if (!isUnblockable && damageDealt <= 0)
             {   // Damage blocked
 
-                // Todo: Opponent Trigger OnDamageBlocked
-
+                // Todo: Opponent Trigger OnAttackBlocked(attackDamage, isCrit)
+                // Todo: Player Trigger OnAttackBlockedByOpponent
             }
-
+            else
+            {
+                if (isCrit)
+                {
+                    // Todo: bleeding on crit
+                }
+            }
 
             // Todo: Trigger OnAfterPlayerAttack
 
             return damageDealt;
         }
 
-        public int TakeDamage(int damage, bool ignoreDefense = false, bool isCrit = false)
+        public int TakeDamage(int damage, bool ignoreDefense = false)
         {
             int damageTaken;
             if (ignoreDefense)
@@ -298,7 +297,7 @@ namespace Nebula._79Nebula.Models
 
             int gainedHealing = 0;
 
-            if (isCriticalHealing())
+            if (IsCriticalHealing())
             {
                 gainedHealing += 2;
             }
