@@ -72,6 +72,13 @@
     <Compile Include="79Nebula\Scripts\Button_Count_Increase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="79Nebula\Manifest\.gitignore" />
+    <Content Include="79Nebula\Manifest\buildcodes.txt" />
+    <Content Include="79Nebula\Manifest\combat log phrases.txt" />
+    <Content Include="79Nebula\Manifest\module_names.txt" />
+    <Content Include="79Nebula\Manifest\weapons.txt" />
+    <Content Include="79Nebula\Manifest\__IDEAS.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

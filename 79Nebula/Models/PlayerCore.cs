@@ -83,7 +83,7 @@ namespace Nebula._79Nebula.Models
 
         public override string ToString()
         {
-            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, {Modules.ToString()}";
+            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, {Modules}";
         }
 
     }

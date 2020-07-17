@@ -23,16 +23,18 @@ namespace Nebula._79Nebula.Effects
 
         public override void OnApply(Player player)
         {
-            player.ModifyStrengthBy(1);
-            player.ModifyAgilityBy(1);
-            player.ModifyIntelligenceBy(1);
+            player.StrengthModifier++;
+            player.AgilityModifier++;
+            player.IntelligenceModifier++;
+            player.CritBonus++;
         }
 
         public override void OnRemove(Player player)
         {
-            player.ModifyStrengthBy(-1);
-            player.ModifyAgilityBy(-1);
-            player.ModifyIntelligenceBy(-1);
+            player.StrengthModifier--;
+            player.AgilityModifier--;
+            player.IntelligenceModifier--;
+            player.CritBonus--;
         }
     }
 }
