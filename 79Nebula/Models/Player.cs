@@ -57,8 +57,8 @@ namespace Nebula._79Nebula.Models
             {
 
                 throw new PlayerCreationException(
-                    $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}])." +
-                    $"The number of modules does not match the number of rounds. The player must have equipped exactly {AutoBattle.MaxRounds} modules."
+                    $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). " +
+                    $"The number of modules does not match the number of rounds. The player must have equipped exactly {AutoBattle.MaxRounds} modules. "
                 );
             }
 
@@ -75,8 +75,8 @@ namespace Nebula._79Nebula.Models
                     else
                     {
                         throw new PlayerCreationException(
-                            $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}])." +
-                            $"Priority of module #{i} (\"{modules[i]}\") is not in range. Expected priority {i-1} between {i+1}."
+                            $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). " +
+                            $"Priority of module #{i} (\"{modules[i]}\") is not in range. Expected priority {i-1} between {i+1}. "
                         );
                     }
                 }
@@ -92,7 +92,7 @@ namespace Nebula._79Nebula.Models
                 }
             } catch (ModuleNotFoundException e)
             {
-                throw new PlayerCreationException($"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). \n\t{e}");
+                throw new PlayerCreationException($"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). \n\t{e} ");
             }
 
         }
