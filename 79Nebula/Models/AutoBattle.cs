@@ -9,7 +9,7 @@ namespace Nebula._79Nebula.Models
 {
     class AutoBattle
     {
-        private const int MaxRounds = 5;
+        public const int MaxRounds = 5;
 
         private List<Player> _players;
 

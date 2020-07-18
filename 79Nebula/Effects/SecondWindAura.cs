@@ -22,7 +22,7 @@ namespace Nebula._79Nebula.Effects
 
         public override void OnApply(Player player)
         {
-            player.ModifyInitiativeBy(5);
+            player.InitiativeModifier += 5;
         }
 
         // Todo: OnCrit()

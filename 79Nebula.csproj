@@ -59,6 +59,7 @@
     <Compile Include="79Nebula\Effects\InitiatorBonus.cs" />
     <Compile Include="79Nebula\Effects\SecondWindAura.cs" />
     <Compile Include="79Nebula\Enums\EffectType.cs" />
+    <Compile Include="79Nebula\Exceptions\PlayerCreationException.cs" />
     <Compile Include="79Nebula\Exceptions\ModuleNotFoundException.cs" />
     <Compile Include="79Nebula\Models\AutoBattle.cs" />
     <Compile Include="79Nebula\Models\Effect.cs" />
@@ -66,9 +67,15 @@
     <Compile Include="79Nebula\Models\Modules.cs" />
     <Compile Include="79Nebula\Enums\ModuleType.cs" />
     <Compile Include="79Nebula\Models\Player.cs" />
-    <Compile Include="79Nebula\Models\PlayerCore.cs" />
+    <Compile Include="79Nebula\Models\PlayerBase.cs" />
     <Compile Include="79Nebula\Modules\SecondWindAura.cs" />
-    <Compile Include="79Nebula\Modules\_ExampleModule.cs" />
+    <Compile Include="79Nebula\Modules\_DefaultModule1.cs" />
+    <Compile Include="79Nebula\Modules\_DefaultModule2.cs" />
+    <Compile Include="79Nebula\Modules\_DefaultModule3.cs" />
+    <Compile Include="79Nebula\Modules\_DefaultModule6.cs" />
+    <Compile Include="79Nebula\Modules\_DefaultModule5.cs" />
+    <Compile Include="79Nebula\Modules\_DefaultModule4.cs" />
+    <Compile Include="79Nebula\Modules\_DefaultModule0.cs" />
     <Compile Include="79Nebula\Scripts\Button_Count_Increase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

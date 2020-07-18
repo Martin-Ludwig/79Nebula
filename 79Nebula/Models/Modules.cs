@@ -8,11 +8,17 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    public static class Modules
+    public class Modules
     {
 
         private static readonly Dictionary<MODULE, Module> _modules = new Dictionary<MODULE, Module> {
-            { MODULE.Default, new ExampleModule() }
+            { MODULE.Default0, new DefaultModule0() },
+            { MODULE.Default1, new DefaultModule1() },
+            { MODULE.Default2, new DefaultModule2() },
+            { MODULE.Default3, new DefaultModule3() },
+            { MODULE.Default4, new DefaultModule4() },
+            { MODULE.Default5, new DefaultModule5() },
+            { MODULE.Default6, new DefaultModule6() }
         };
 
 
@@ -57,10 +63,12 @@ namespace Nebula._79Nebula.Models
     }
     public enum MODULE
     {
-        Default = 0,
-        Attack = 10,
-        Spell,
-        A = 20,
-        B,
+        Default0 = 0,
+        Default1 = 1,
+        Default2 = 2,
+        Default3 = 3,
+        Default4 = 4,
+        Default5 = 5,
+        Default6 = 6,
     }
 }

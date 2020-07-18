@@ -9,7 +9,7 @@ using AllModules = Nebula._79Nebula.Models.Modules;
 
 namespace Nebula._79Nebula.Models
 {
-    public class Player : PlayerCore
+    public class Player : PlayerBase
     {
         public int StrengthModifier { get; set; } = 0;
         public int AgilityModifier { get; set; } = 0;
@@ -53,19 +53,46 @@ namespace Nebula._79Nebula.Models
         public Player(string name, int strength, int agility, int intelligence, List<string> modules)
             : base(name, strength, agility, intelligence, modules)
         {
-            // Load modules
-            // Convert string to module
+            if (modules.Count != AutoBattle.MaxRounds)
+            {
+
+                throw new PlayerCreationException(
+                    $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}])." +
+                    $"The number of modules does not match the number of rounds. The player must have equipped exactly {AutoBattle.MaxRounds} modules."
+                );
+            }
+
             try
             {
                 Modules = new List<Module>();
+                // Load modules
+                for (int i = 0; i < AutoBattle.MaxRounds; i++) {
+                    Module module = AllModules.Get(modules[i]);
+                    if (module.Priority >= i-1 && module.Priority <= i+1)
+                    {
+                        Modules.Add(module);
+                    }
+                    else
+                    {
+                        throw new PlayerCreationException(
+                            $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}])." +
+                            $"Priority of module #{i} (\"{modules[i]}\") is not in range. Expected priority {i-1} between {i+1}."
+                        );
+                    }
+                }
+
                 foreach (string moduleName in base.Modules)
                 {
+                    // Get module object by name
                     Module module = AllModules.Get(moduleName);
+
+
+
                     Modules.Add(module);
                 }
             } catch (ModuleNotFoundException e)
             {
-                throw new ModuleNotFoundException($"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). \n\t{e}");
+                throw new PlayerCreationException($"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). \n\t{e}");
             }
 
         }

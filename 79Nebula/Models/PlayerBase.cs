@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    public class PlayerCore
+    public class PlayerBase
     {
         // Player's name
         public readonly string Name;
@@ -72,7 +72,7 @@ namespace Nebula._79Nebula.Models
             get { return HealthBase + Vitality * VitalityMultiplier; }
         }
 
-        public PlayerCore(string name, int strength, int agility, int intelligence, List<string> modules)
+        public PlayerBase(string name, int strength, int agility, int intelligence, List<string> modules)
         {
             Name = name;
             Strength = strength;

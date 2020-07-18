@@ -9,24 +9,18 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Modules
 {
-    class ExampleModule : Module
+    class DefaultModule5 : Module
     {
-        public override string Name => "Example Module";
+        public override string Name => "Default Module 5";
         public override string Description => "No description given.";
-        public override int Priority => 0;
+        public override int Priority => 5;
         public override List<ModuleType> ModuleTypes => new List<ModuleType>(){
             ModuleType.Untyped
         };
 
-        public ExampleModule()
-        {
-        }
-
         public override void Activate(Player user, Player opponent)
         {
             Console.WriteLine("Pew pew!");
-            user.ModifyStrengthBy(1);
-            opponent.ModifyStrengthBy(-1);
         }
     }
 }

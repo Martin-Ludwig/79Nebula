@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Exceptions
 {
-    class ModuleNotFoundException : Exception
+    public class ModuleNotFoundException : Exception
     {
         public ModuleNotFoundException()
         {
