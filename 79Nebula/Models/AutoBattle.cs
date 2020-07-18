@@ -50,7 +50,6 @@ namespace Nebula._79Nebula.Models
             _players[0].RemoveEffect(new InitiatorBonus());
         }
 
-
         private void UseModule(int i, Player player, Player opponent)
         {
             // Todo: Before
@@ -59,7 +58,6 @@ namespace Nebula._79Nebula.Models
 
             // Todo: After
         }
-
 
         /// <summary>
         /// Takes a List of Players and sorts them by Priority.
