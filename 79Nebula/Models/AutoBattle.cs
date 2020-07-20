@@ -1,4 +1,6 @@
 ﻿using Nebula._79Nebula.Effects;
+using Nebula._79Nebula.Enums;
+using Nebula._79Nebula.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,44 +13,97 @@ namespace Nebula._79Nebula.Models
     {
         public const int MaxRounds = 5;
 
-        private List<Player> _players;
+        public AutoBattleState State = AutoBattleState.IsPreparing;
+
+        private readonly Player _player;
+        private readonly Player _opponent;
 
         public AutoBattle(Player player, Player opponent)
         {
-            if ((player.Modules.Count < MaxRounds) || (player.Modules.Count < MaxRounds))
+            try
             {
-                throw new Exception($"Player has less than {MaxRounds} Modules equipped.");
+                _player = player;
+            }
+            catch (PlayerCreationException e)
+            {
+                State = AutoBattleState.ErrorPlayerLost;
+                throw e;
             }
 
-            _players.Add(player);
-            _players.Add(opponent);
+            try
+            {
+                _opponent = opponent;
+            }
+            catch (PlayerCreationException e)
+            {
+                State = AutoBattleState.ErrorPlayerWon;
+                throw e;
+            }
+
+            Battle();
+
+            State = GetBattleResult();
         }
 
         private void Battle()
         {
-            for (int round = 0; round < MaxRounds; round++ )
-            {
-                DoRound(round);
+            State = AutoBattleState.IsRunning;
+            bool lastRoundPlayerFirst = true;
+
+            for (int round = 0; round < MaxRounds; round++)
+            {   // Do rounds 0 to 4
+
+                if (IsPlayerFaster(round, lastRoundPlayerFirst))
+                {
+                    // Player starts round
+                    DoRound(round, _player, _opponent);
+                    lastRoundPlayerFirst = true;
+                }
+                else
+                {
+                    // Opponent starts round
+                    DoRound(round, _opponent, _player);
+                    lastRoundPlayerFirst = false;
+                }
+
+                if (State != AutoBattleState.IsRunning)
+                {   // Premature End
+                    break;
+                }
             }
         }
 
-        private void DoRound(int round)
+        public void DoRound(int round, Player player1, Player player2)
         {
+            // Apply Initiator Bonus to faster player
+            player1.ApplyEffect(new InitiatorBonus());
 
-            _players = SortPlayersByPriority(round, _players);
-            _players[0].ApplyEffect(new InitiatorBonus());
+            // Todo: Trigger OnRoundStart
 
-            // TRIGGER OnRoundStart
-            // Todo: Add Initiator Bonus
+            if (State == AutoBattleState.IsRunning)
+            {
+                // Player 1 Action
+                UseModule(round, player1, player2);
+                
+                // Check if any player's health is zero or below
+                CheckPrematureEnd();
+            }
 
+            if (State == AutoBattleState.IsRunning)
+            {
+                // Player 2 Action
+                UseModule(round, player2, player1);
 
-            UseModule(round, _players[0], _players[1]);
-            UseModule(round, _players[1], _players[0]);
+                // Check if any player's health is zero or below
+                CheckPrematureEnd();
+            }
 
-            // TRIGGER OnRoundEnd
-            // Todo: Remove Initiator Bonus
-            _players[0].RemoveEffect(new InitiatorBonus());
+            // Todo: Trigger OnRoundEnd
+
+            // Remove Initiator Bonus from faster player
+            player1.RemoveEffect(new InitiatorBonus());
         }
+
 
         private void UseModule(int i, Player player, Player opponent)
         {
@@ -60,13 +115,83 @@ namespace Nebula._79Nebula.Models
         }
 
         /// <summary>
-        /// Takes a List of Players and sorts them by Priority.
-        /// Priority is sorted by (ASC Module Priority, DESC Player Init)
+        /// Compares both players Module Priority, Initiative, Health.
         /// </summary>
-        private List<Player> SortPlayersByPriority(int round, List<Player> players)
+        /// <returns>True if player is faster. False if opponent is faster.</returns>
+        private bool IsPlayerFaster(int round, bool resultIfEqual = true)
         {
-            players.OrderBy(o => o.GetPriority(round)).ThenByDescending(o => o.Initiative);
-            return players;
+            if (_player.GetModulePriority(round) < _opponent.GetModulePriority(round))
+            {
+                return true;
+            } 
+            else if (_player.GetModulePriority(round) > _opponent.GetModulePriority(round))
+            {
+                return false;
+            } 
+            else
+            {
+                if (_player.Initiative > _opponent.Initiative)
+                {
+                    return true;
+                }
+                else if(_player.Initiative < _opponent.Initiative)
+                {
+                    return false;
+                } else
+                {
+                    if (_player.Health > _opponent.Health)
+                    {
+                        return true;
+                    }
+                    else if (_player.Health < _opponent.Health)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return resultIfEqual;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if any player's health is zero or below
+        /// Sets Battle State accordingly to draw, lost, won.
+        /// </summary>
+        private void CheckPrematureEnd()
+        {
+            if (_player.Health <= 0 && _opponent.Health <= 0)
+            {
+                State = AutoBattleState.Draw;
+            } 
+            else if (_player.Health <= 0)
+            {
+                State = AutoBattleState.Lost;
+            }
+            else if (_opponent.Health <= 0)
+            {
+                State = AutoBattleState.Won;
+            }
+        }
+
+        /// <summary>
+        /// Sets State status to Draw, Won or Lost.
+        /// </summary>
+        private AutoBattleState GetBattleResult()
+        {
+            if ((_player.Health == _opponent.Health) || (_player.Health <= 0 && _opponent.Health <= 0))
+            {
+                return AutoBattleState.Draw;
+            }
+            else if ((_player.Health > _opponent.Health) || (_opponent.Health <= 0))
+            {
+                return AutoBattleState.Won;
+            }
+            else
+            {
+                return AutoBattleState.Lost;
+            }
         }
 
     }

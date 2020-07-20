@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="79Nebula\Effects\InitiatorBonus.cs" />
     <Compile Include="79Nebula\Effects\SecondWindAura.cs" />
+    <Compile Include="79Nebula\Enums\AutoBattleState.cs" />
     <Compile Include="79Nebula\Enums\EffectType.cs" />
     <Compile Include="79Nebula\Exceptions\PlayerCreationException.cs" />
     <Compile Include="79Nebula\Exceptions\ModuleNotFoundException.cs" />
