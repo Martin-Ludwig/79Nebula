@@ -27,19 +27,6 @@ namespace Tests
         [Test]
         public void ModificationTests()
         {
-            player.StrengthModifier += 1;
-            Assert.AreEqual(2, player.Strength);
-
-            player.AgilityModifier += 1;
-            Assert.AreEqual(2, player.Agility);
-
-            player.IntelligenceModifier += 1;
-            Assert.AreEqual(2, player.Intelligence);
-        }
-
-        [Test]
-        public void ModificationTests2()
-        {
             int tmp;
 
             tmp = player.Attack;
@@ -61,6 +48,60 @@ namespace Tests
             tmp = player.Vitality;
             player.VitalityModifier += 1;
             Assert.AreEqual(tmp + 1, player.Vitality);
+        }
+
+        [Test]
+        public void StrengthModificationTest()
+        {
+            int str = player.Strength;
+            int att = player.Attack;
+            int def = player.Defense;
+            int hel = player.Healing;
+            int vit = player.Vitality;
+            int hp = player.Health;
+
+            player.StrengthModifier += 1;
+
+            Assert.AreEqual(str + 1, player.Strength);
+            Assert.AreEqual(att + 1, player.Attack);
+            Assert.AreEqual(def + 1, player.Defense);
+            Assert.AreEqual(hel + 1, player.Healing);
+            Assert.AreEqual(vit + 2, player.Vitality);
+            Assert.AreEqual(hp + (2 * Player.VitalityMultiplier), player.Health);
+        }
+
+        [Test]
+        public void AgilityModificationTest()
+        {
+            int agi = player.Agility;
+            int def = player.Defense;
+            int init = player.Initiative;
+            int vit = player.Vitality;
+            int hp = player.Health;
+
+            player.AgilityModifier += 1;
+
+            Assert.AreEqual(agi + 1, player.Agility);
+            Assert.AreEqual(def + 2, player.Defense);
+            Assert.AreEqual(init + 2, player.Initiative);
+            Assert.AreEqual(vit + 1, player.Vitality);
+            Assert.AreEqual(hp + (Player.VitalityMultiplier), player.Health);
+        }
+
+        [Test]
+        public void IntelligenceModificationTest()
+        {
+            int intl = player.Intelligence;
+            int att = player.Attack;
+            int hel = player.Healing;
+            int init = player.Initiative;
+
+            player.IntelligenceModifier += 1;
+
+            Assert.AreEqual(intl +1, player.Intelligence);
+            Assert.AreEqual(att + 2, player.Attack);
+            Assert.AreEqual(hel + 2, player.Healing);
+            Assert.AreEqual(init + 1, player.Initiative);
         }
 
         [Test]

@@ -28,7 +28,7 @@ namespace Nebula._79Nebula.Models
 
         public override string ToString()
         {
-            return $"{Name} ({Priority}), Type: {ModuleTypes}\n\t{Description}";
+            return $"{Name} ({Priority}), Type: [{ string.Join(",", ModuleTypes)}]\n\t{Description}";
         }
 
     }

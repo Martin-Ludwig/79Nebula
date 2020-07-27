@@ -49,6 +49,9 @@ namespace Nebula._79Nebula.Models
 
         }
 
+        public new List<Module> Modules;
+        private readonly List<Effect> Effects = new List<Effect>();
+
         // Stat Modifier
         public int StrengthModifier { get; set; } = 0;
         public int AgilityModifier { get; set; } = 0;
@@ -60,9 +63,48 @@ namespace Nebula._79Nebula.Models
         public int VitalityModifier { get; set; } = 0;
         public int CritBonus { get; set; } = 0;
 
-        public new List<Module> Modules;
-        private readonly List<Effect> Effects = new List<Effect>();
 
+        // Base Stats + Modifier
+        public override int Strength
+        {
+            get { return base.Strength + StrengthModifier; }
+        }
+        public override int Agility
+        {
+            get { return base.Agility + AgilityModifier; }
+        }
+        public override int Intelligence
+        {
+            get { return base.Intelligence + IntelligenceModifier; }
+        }
+
+        public override int Attack
+        {
+            get { return base.Attack + AttackModifier; }
+        }
+        public override int Defense
+        {
+            get { return base.Defense + DefenseModifier; }
+        }
+        public override int Initiative
+        {
+            get { return base.Initiative + InitiativeModifier; }
+        }
+        public override int Healing
+        {
+            get { return base.Healing + HealingModifier; }
+        }
+        public override int Vitality
+        {
+            get { return base.Vitality + VitalityModifier; }
+        }
+
+        public override int Health
+        {
+            get { return base.Health + Healed - Damaged; }
+        }
+
+        // Health modifiers in battle
         // Combat stats to calculate health
         public int Damaged { get; set; } = 0;
         public int Healed { get; set; } = 0;
@@ -78,53 +120,17 @@ namespace Nebula._79Nebula.Models
             get { return _barrier; }
             set
             {
-                if ( (_barrier + value) >= (Health / 2))
+                if ((_barrier + value) >= (Health / 2))
                 {
                     _barrier = (Health / 2);
-                } else
+                }
+                else
                 {
                     _barrier += value;
                 }
             }
         }
 
-        // Base Stats + Modifier
-        public new int Strength
-        {
-            get { return base.Strength + StrengthModifier; }
-        }
-        public new int Agility
-        {
-            get { return base.Agility + AgilityModifier; }
-        }
-        public new int Intelligence
-        {
-            get { return base.Strength + IntelligenceModifier; }
-        }
-        public new int Attack
-        {
-            get { return base.Attack + AttackModifier; }
-        }
-        public new int Defense
-        {
-            get { return base.Defense + DefenseModifier; }
-        }
-        public new int Initiative
-        {
-            get { return base.Initiative + InitiativeModifier; }
-        }
-        public new int Healing
-        {
-            get { return base.Healing + HealingModifier; }
-        }
-        public new int Vitality
-        {
-            get { return base.Vitality + VitalityModifier; }
-        }
-        public new int Health
-        {
-            get { return base.Health + Healed - Damaged; }
-        }
 
         /// <summary>
         /// Returns priority of equipped module

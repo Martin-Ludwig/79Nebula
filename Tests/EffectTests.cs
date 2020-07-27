@@ -11,15 +11,19 @@ namespace Tests
     class EffectTests
     {
 
+        Player player;
+
         [SetUp]
         public void Setup()
         {
+            player = new Player("Test Player", 1, 1, 1, new List<string>() {
+                "Default1", "Default2", "Default3", "Default4", "Default5"
+            });
         }
 
         [Test]
         public void ApplyEffectTest()
         {
-            Player player = new Player("1", 1, 1, 1, new List<string> { });
             Effect effect = new InitiatorBonus();
 
             Assert.IsTrue(player.ApplyEffect(effect));
@@ -30,41 +34,30 @@ namespace Tests
         [Test]
         public void ApplyEffectTest2()
         {
-            Player player = new Player("1", 1, 1, 1, new List<string> { });
-
             Assert.IsTrue(player.ApplyEffect(new InitiatorBonus()));
-
-            Assert.Pass();
         }
 
         [Test]
         public void HasEffectTest1()
         {
-            Player player = new Player("1", 1, 1, 1, new List<string> { });
             Effect effect = new InitiatorBonus();
 
             Assert.IsTrue(player.ApplyEffect(effect));
             Assert.AreEqual(1, player.HasEffect(effect));
-
-            Assert.Pass();
         }
 
         [Test]
         public void HasEffectTest2()
         {
-            Player player = new Player("1", 1, 1, 1, new List<string> { });
             Effect effect = new InitiatorBonus();
 
             Assert.IsTrue(player.ApplyEffect(effect));
             Assert.AreEqual(1, player.HasEffect(new InitiatorBonus()));
-
-            Assert.Pass();
         }
 
         [Test]
         public void RemoveEffectByEffectTest1()
         {
-            Player player = new Player("1", 1, 1, 1, new List<string> { });
             Effect effect = new InitiatorBonus();
 
             Assert.IsTrue(player.ApplyEffect(effect));
@@ -72,14 +65,11 @@ namespace Tests
 
             Assert.AreEqual(0, player.HasEffect(effect));
             Assert.AreEqual(0, player.HasEffect(new InitiatorBonus()));
-
-            Assert.Pass();
         }
 
         [Test]
         public void RemoveEffectByEffectTest2()
         {
-            Player player = new Player("1", 1, 1, 1, new List<string> { });
             Effect effect = new InitiatorBonus();
 
             Assert.IsTrue(player.ApplyEffect(effect));
@@ -87,14 +77,11 @@ namespace Tests
 
             Assert.AreEqual(0, player.HasEffect(effect));
             Assert.AreEqual(0, player.HasEffect(new InitiatorBonus()));
-
-            Assert.Pass();
         }
 
         [Test]
         public void RemoveEffectByHashcodeTest()
         {
-            Player player = new Player("1", 1, 1, 1, new List<string> { });
             Effect effect = new InitiatorBonus();
 
             Assert.IsTrue(player.ApplyEffect(effect));
@@ -102,9 +89,6 @@ namespace Tests
 
             Assert.AreEqual(0, player.HasEffect(effect));
             Assert.AreEqual(0, player.HasEffect(new InitiatorBonus()));
-
-            Assert.Pass();
-
         }
 
         [Test]

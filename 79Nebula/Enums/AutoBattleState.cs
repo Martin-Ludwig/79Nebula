@@ -9,8 +9,8 @@ namespace Nebula._79Nebula.Enums
     public enum AutoBattleState
     {
         Error = 0,
-        ErrorPlayerLost = 1,
-        ErrorPlayerWon = 2,
+        // ErrorPlayerLost = 1,
+        // ErrorPlayerWon = 2,
 
         IsPreparing = 10,
 

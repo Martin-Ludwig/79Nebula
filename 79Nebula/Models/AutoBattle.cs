@@ -9,44 +9,24 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    class AutoBattle
+    public class AutoBattle
     {
         public const int MaxRounds = 5;
 
         public AutoBattleState State = AutoBattleState.IsPreparing;
 
-        private readonly Player _player;
-        private readonly Player _opponent;
+        private Player _player;
+        private Player _opponent;
 
-        public AutoBattle(Player player, Player opponent)
+        public AutoBattle()
         {
-            try
-            {
-                _player = player;
-            }
-            catch (PlayerCreationException e)
-            {
-                State = AutoBattleState.ErrorPlayerLost;
-                throw e;
-            }
-
-            try
-            {
-                _opponent = opponent;
-            }
-            catch (PlayerCreationException e)
-            {
-                State = AutoBattleState.ErrorPlayerWon;
-                throw e;
-            }
-
-            Battle();
-
-            State = GetBattleResult();
         }
 
-        private void Battle()
+        public AutoBattleState Battle(Player player, Player opponent)
         {
+            _player = player;
+            _opponent = opponent;
+
             State = AutoBattleState.IsRunning;
             bool lastRoundPlayerFirst = true;
 
@@ -71,9 +51,11 @@ namespace Nebula._79Nebula.Models
                     break;
                 }
             }
+
+            return State = GetBattleResult();
         }
 
-        public void DoRound(int round, Player player1, Player player2)
+        private void DoRound(int round, Player player1, Player player2)
         {
             // Apply Initiator Bonus to faster player
             player1.ApplyEffect(new InitiatorBonus());
@@ -180,6 +162,7 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         private AutoBattleState GetBattleResult()
         {
+
             if ((_player.Health == _opponent.Health) || (_player.Health <= 0 && _opponent.Health <= 0))
             {
                 return AutoBattleState.Draw;

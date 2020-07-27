@@ -15,15 +15,15 @@ namespace Nebula._79Nebula.Models
         
         // Base Strength (Str)
         // increased vitality by 2 and attack, defense and healing by 1
-        public readonly int Strength;
+        public virtual int Strength { get; }
 
         // Base Agility (Agi)
         // increases initiative and defense by 2 and vitality by 1
-        public readonly int Agility;
+        public virtual int Agility { get; }
 
         // Base Intelligence (Int)
         // increases attack and healing by 2 and initiative by 1
-        public readonly int Intelligence;
+        public virtual int Intelligence { get; }
 
         // List of modules (skills) the player has.
         public readonly List<string> Modules;
@@ -37,37 +37,37 @@ namespace Nebula._79Nebula.Models
         public const int HealthBase = 100;
 
         // Attack = 2 * Intelligence + Strength
-        public int Attack
+        public virtual int Attack
         {
             get { return 2 * Intelligence + Strength; }
         }
 
         // Defense = 2 * Agility + Strength
-        public int Defense
+        public virtual int Defense
         {
             get { return 2 * Agility + Strength; }
         }
 
         // Initiative = 2 * Agility + Intelligence
-        public int Initiative
+        public virtual int Initiative
         {
             get { return 2 * Agility + Intelligence; }
         }
 
         // Healing = 2 * Intelligence + Strength
-        public int Healing
+        public virtual int Healing
         {
             get { return 2 * Intelligence + Strength; }
         }
 
         // Vitality = 2 * Strength + Agility
-        public int Vitality
+        public virtual int Vitality
         {
             get { return 2 * Strength + Agility; }
         }
 
         // Health = HealthBase + Vitality * VitalityMultiplier
-        public int Health
+        public virtual int Health
         {
             get { return HealthBase + Vitality * VitalityMultiplier; }
         }
