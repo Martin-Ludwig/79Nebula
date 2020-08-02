@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="79Nebula\DataAccess\Enemy_DataAccess.cs" />
-    <None Include="79Nebula\DataAccess\Enemy_DataAccess.cs.old" />
     <Compile Include="79Nebula\Effects\InitiatorBonus.cs" />
     <Compile Include="79Nebula\Effects\SecondWindAura.cs" />
     <Compile Include="79Nebula\Enums\AutoBattleState.cs" />
