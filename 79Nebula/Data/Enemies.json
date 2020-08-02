@@ -1,0 +1,30 @@
+{
+  "Enemies": [
+    {
+      "Name": "Lizzie",
+      "Strength": 1,
+      "Agility": 1,
+      "Intelligence": 1,
+      "Modules": [
+        "Default1",
+        "Default2",
+        "Default3",
+        "Default4",
+        "Default5"
+      ]
+    },
+    {
+      "Name": "Mirza",
+      "Strength": 1,
+      "Agility": 0,
+      "Intelligence": 2,
+      "Modules": [
+        "Default1",
+        "Default2",
+        "Default3",
+        "Default4",
+        "Default5"
+      ]
+    }
+  ]
+}

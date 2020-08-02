@@ -389,7 +389,15 @@ namespace Nebula._79Nebula.Models
 
         public override string ToString()
         {
-            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, Modules: [{string.Join(",",Modules)}]";
+            string modules = "";
+            foreach (Module m in Modules)
+            {
+                modules += m.Name + ", ";
+            }
+            modules = modules.Substring(0, modules.Length - 2);
+
+
+            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, Modules: [{modules}]";
         }
 
     }

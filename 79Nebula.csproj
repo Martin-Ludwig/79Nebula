@@ -53,9 +53,14 @@
       <Private>False</Private>
       <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="79Nebula\DataAccess\Enemy_DataAccess.cs" />
+    <None Include="79Nebula\DataAccess\Enemy_DataAccess.cs.old" />
     <Compile Include="79Nebula\Effects\InitiatorBonus.cs" />
     <Compile Include="79Nebula\Effects\SecondWindAura.cs" />
     <Compile Include="79Nebula\Enums\AutoBattleState.cs" />
@@ -64,6 +69,7 @@
     <Compile Include="79Nebula\Exceptions\ModuleNotFoundException.cs" />
     <Compile Include="79Nebula\Models\AutoBattle.cs" />
     <Compile Include="79Nebula\Models\Effect.cs" />
+    <Compile Include="79Nebula\Models\Enemy.cs" />
     <Compile Include="79Nebula\Models\Module.cs" />
     <Compile Include="79Nebula\Models\Modules.cs" />
     <Compile Include="79Nebula\Enums\ModuleType.cs" />
@@ -87,6 +93,11 @@
     <Content Include="79Nebula\Manifest\module_names.txt" />
     <Content Include="79Nebula\Manifest\weapons.txt" />
     <Content Include="79Nebula\Manifest\__IDEAS.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="79Nebula\Data\Enemies.json" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
