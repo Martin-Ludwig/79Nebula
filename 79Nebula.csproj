@@ -67,6 +67,7 @@
     <Compile Include="79Nebula\Exceptions\PlayerCreationException.cs" />
     <Compile Include="79Nebula\Exceptions\ModuleNotFoundException.cs" />
     <Compile Include="79Nebula\Models\AutoBattle.cs" />
+    <Compile Include="79Nebula\Models\BattleInstance.cs" />
     <Compile Include="79Nebula\Models\Effect.cs" />
     <Compile Include="79Nebula\Models\Enemy.cs" />
     <Compile Include="79Nebula\Models\Module.cs" />
