@@ -28,4 +28,17 @@ margin_bottom = 46.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Switch_Scene" type="Button" parent="."]
+anchor_right = 0.017
+anchor_bottom = 0.016
+margin_left = 15.0
+margin_top = 81.0
+margin_right = 147.76
+margin_bottom = 80.52
+text = "switch_scene_button"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Button_Count_Increase" to="Button_Count_Increase" method="_on_Button_Count_Increase_pressed"]
+[connection signal="pressed" from="Switch_Scene" to="Button_Count_Increase" method="_on_Switch_Scene_pressed"]

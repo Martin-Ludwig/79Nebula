@@ -83,6 +83,7 @@
     <Compile Include="79Nebula\Modules\_DefaultModule5.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule4.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule0.cs" />
+    <Compile Include="79Nebula\Scripts\Battle_Button.cs" />
     <Compile Include="79Nebula\Scripts\Button_Count_Increase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

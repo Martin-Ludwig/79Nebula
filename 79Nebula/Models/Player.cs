@@ -386,7 +386,24 @@ namespace Nebula._79Nebula.Models
             Healed += n;
         }
 
-
+        /// <summary>
+        /// Resets Health, Modifiers and Effects back to default.
+        /// </summary>
+        public void Reset()
+        {
+            Damaged = 0;
+            Healed = 0;
+            Effects.Clear();
+            StrengthModifier = 0;
+            AgilityModifier = 0;
+            IntelligenceModifier = 0;
+            AttackModifier = 0;
+            DefenseModifier = 0;
+            HealingModifier = 0;
+            InitiativeModifier = 0;
+            VitalityModifier = 0;
+            CritBonus = 0;
+        }
         public override string ToString()
         {
             string modules = "";

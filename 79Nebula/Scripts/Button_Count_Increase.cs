@@ -18,4 +18,10 @@ public class Button_Count_Increase : Button
 		_counter++;
 		_label.Text = _counter.ToString();
 	}
+
+	private void _on_Switch_Scene_pressed()
+	{
+		GetTree().ChangeScene("res://79Nebula/Scenes/Battle.tscn");
+	}
+
 }

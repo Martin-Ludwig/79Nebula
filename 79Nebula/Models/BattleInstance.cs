@@ -1,4 +1,5 @@
 ﻿using Godot;
+using Nebula._79Nebula.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,23 +8,25 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
-    class BattleInstance
+    public class BattleInstance
     {
-        private Player _player;
-        private List<Enemy> _enemies;
+        public Player Player;
+        public Player Opponent;
 
+        private List<Enemy> _enemies;
         private AutoBattle autoBattle = new AutoBattle();
 
         public BattleInstance(Player player, List<Enemy> enemies)
         {
-            _player = player;
+            Player = player;
             _enemies = enemies;
         }
 
-        public void Battle()
+        public AutoBattleState Battle()
         {
-            Player opponent = SelectEnemy().ToPlayer();
-            autoBattle.Battle(_player, opponent);
+            Player.Reset();
+            Opponent = SelectEnemy().ToPlayer();
+            return autoBattle.Battle(Player, Opponent);
         }
 
         private Enemy SelectEnemy()
