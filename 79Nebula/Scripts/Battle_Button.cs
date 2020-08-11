@@ -27,6 +27,12 @@ public class Battle_Button : Node
 		Enemy_DataAccess eda = Enemy_DataAccess.FromJson(json);
 		List<Enemy> enemies = eda.Enemies;
 
+		Console.WriteLine("Enemies: ");
+		foreach(Enemy e in enemies)
+		{
+			Console.WriteLine($"\t{e.Name}");
+		}
+
 		_battle = new BattleInstance(_player, enemies);
 
 		_playerLabel = GetNode<Label>("../PlayerName_Label");

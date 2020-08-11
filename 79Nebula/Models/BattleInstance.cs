@@ -16,6 +16,8 @@ namespace Nebula._79Nebula.Models
         private List<Enemy> _enemies;
         private AutoBattle autoBattle = new AutoBattle();
 
+        Random random = new Random();
+
         public BattleInstance(Player player, List<Enemy> enemies)
         {
             Player = player;
@@ -31,8 +33,11 @@ namespace Nebula._79Nebula.Models
 
         private Enemy SelectEnemy()
         {
-            Random random = new Random();
-            return _enemies.ElementAt(random.Next(0, _enemies.Count - 1));
+            
+            Console.WriteLine($"Enemies.Count: {_enemies.Count}");
+            int i = random.Next(_enemies.Count);
+            Console.WriteLine($"Random: {i}");
+            return _enemies.ElementAt(i);
         }
 
 
