@@ -22,9 +22,11 @@ public class Battle_Button : Node
 				"Default1", "Default2", "Default3", "Default4", "Default5"
 			});
 
-		string _file = @"79Nebula\Data\Enemies.json";
-		string json = System.IO.File.ReadAllText(_file);
-		Enemy_DataAccess eda = Enemy_DataAccess.FromJson(json);
+		File f = new File();
+		f.Open("res://79Nebula/Data/Enemies.json", File.ModeFlags.Read);
+		var content = f.GetAsText();
+
+		Enemy_DataAccess eda = Enemy_DataAccess.FromJson(content);
 		List<Enemy> enemies = eda.Enemies;
 
 		Console.WriteLine("Enemies: ");
@@ -34,7 +36,7 @@ public class Battle_Button : Node
 		}
 
 		_battle = new BattleInstance(_player, enemies);
-
+		
 		_playerLabel = GetNode<Label>("../PlayerName_Label");
 		_opponentLabel = GetNode<Label>("../OpponentName_Label");
 		_battleLabel = GetNode<Label>("../BattleResult_Label");
