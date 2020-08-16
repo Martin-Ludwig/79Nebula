@@ -26,11 +26,8 @@ namespace Tests
                 "Default1", "Default2", "Default3", "Default4", "Default5"
             });
 
-            string _file = System.IO.Path.Combine("../../../../79Nebula", @"Data\Enemies.json");
-            string json = System.IO.File.ReadAllText(_file);
-            Enemy_DataAccess eda = Enemy_DataAccess.FromJson(json);
-            
-            enemies = eda.Enemies;
+
+            enemies = Utils.Utils.DebugEnemies();
 
         }
 

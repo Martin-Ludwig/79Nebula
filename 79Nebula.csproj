@@ -59,7 +59,7 @@
     </Reference>
     <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Tools' ">
       <Private>False</Private>
-      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
+      <HintPath>.mono\assemblies\Debug\GodotSharpEditor.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -93,6 +93,8 @@
     <Compile Include="79Nebula\Modules\_DefaultModule0.cs" />
     <Compile Include="79Nebula\Scripts\Battle_Button.cs" />
     <Compile Include="79Nebula\Scripts\Button_Count_Increase.cs" />
+    <Compile Include="79Nebula\Utils\FileHandler.cs" />
+    <Compile Include="79Nebula\Utils\JsonHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
