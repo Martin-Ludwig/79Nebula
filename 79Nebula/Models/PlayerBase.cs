@@ -28,6 +28,11 @@ namespace Nebula._79Nebula.Models
         // List of modules (skills) the player has.
         public readonly List<string> Modules;
 
+        // Coefficient of the primary attribute value.
+        public const int MajorMultiplier = 2;
+
+        // Coefficient of the secondary attribute value.
+        public const int MinorMultiplier = 1;
 
         // Determines how much health one point in vitality gives.
         // Vitality = 2 * Str + Agi
@@ -39,31 +44,31 @@ namespace Nebula._79Nebula.Models
         // Attack = 2 * Intelligence + Strength
         public virtual int Attack
         {
-            get { return 2 * Intelligence + Strength; }
+            get { return MajorMultiplier * Intelligence + MinorMultiplier * Strength; }
         }
 
         // Defense = 2 * Agility + Strength
         public virtual int Defense
         {
-            get { return 2 * Agility + Strength; }
+            get { return MajorMultiplier * Agility + MinorMultiplier * Strength; }
         }
 
         // Initiative = 2 * Agility + Intelligence
         public virtual int Initiative
         {
-            get { return 2 * Agility + Intelligence; }
+            get { return MajorMultiplier * Agility + MinorMultiplier * Intelligence; }
         }
 
         // Healing = 2 * Intelligence + Strength
         public virtual int Healing
         {
-            get { return 2 * Intelligence + Strength; }
+            get { return MajorMultiplier * Intelligence + MinorMultiplier * Strength; }
         }
 
         // Vitality = 2 * Strength + Agility
         public virtual int Vitality
         {
-            get { return 2 * Strength + Agility; }
+            get { return MajorMultiplier * Strength + MinorMultiplier * Agility; }
         }
 
         // Health = HealthBase + Vitality * VitalityMultiplier

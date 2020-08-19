@@ -17,10 +17,6 @@ namespace Nebula._79Nebula.Effects
             EffectType.Buff
         };
 
-        public InitiatorBonus()
-        {
-        }
-
         public override void OnApply(Player player)
         {
             player.StrengthModifier++;

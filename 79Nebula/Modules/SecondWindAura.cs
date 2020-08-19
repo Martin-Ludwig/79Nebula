@@ -28,4 +28,5 @@ namespace Nebula._79Nebula.Modules
             user.ApplyEffect(new Effects.SecondWindAura());
         }
     }
+
 }

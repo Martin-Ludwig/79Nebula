@@ -74,6 +74,7 @@
     <Compile Include="79Nebula\Enums\EffectType.cs" />
     <Compile Include="79Nebula\Exceptions\PlayerCreationException.cs" />
     <Compile Include="79Nebula\Exceptions\ModuleNotFoundException.cs" />
+    <Compile Include="79Nebula\Interfaces\IDuration.cs" />
     <Compile Include="79Nebula\Models\AutoBattle.cs" />
     <Compile Include="79Nebula\Models\BattleInstance.cs" />
     <Compile Include="79Nebula\Models\Effect.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="79Nebula\Models\PlayerBase.cs" />
     <Compile Include="79Nebula\Modules\SecondWindAura.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule1.cs" />
+    <Compile Include="79Nebula\Modules\EnergyPrism.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule2.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule3.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule6.cs" />

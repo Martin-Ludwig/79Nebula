@@ -16,9 +16,6 @@ namespace Nebula._79Nebula.Effects
             EffectType.Aura, 
             EffectType.Buff 
         };
-        public SecondWindAura()
-        {
-        }
 
         public override void OnApply(Player player)
         {

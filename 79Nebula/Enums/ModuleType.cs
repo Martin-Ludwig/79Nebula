@@ -11,6 +11,8 @@ namespace Nebula._79Nebula.Enums
         Untyped,
         Attack,
         Spell,
-        Aura
+        Aura,
+        Support,
+        Duration
     }
 }

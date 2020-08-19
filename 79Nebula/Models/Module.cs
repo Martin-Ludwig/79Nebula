@@ -10,7 +10,7 @@ namespace Nebula._79Nebula.Models
     public abstract class Module
     {
         public virtual string Name => "Example Module";
-        ///The lower the number, the more priority the skill has.
+        ///The lower the number, the higher priority the skill has.
         public virtual int Priority => 0;
         public virtual List<ModuleType> ModuleTypes => new List<ModuleType>()
                 { ModuleType.Untyped };
