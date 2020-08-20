@@ -1,12 +1,7 @@
 ﻿using Nebula._79Nebula.Enums;
 using Nebula._79Nebula.Interfaces;
 using Nebula._79Nebula.Models;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Modules
 {
@@ -22,8 +17,6 @@ namespace Nebula._79Nebula.Modules
 
         public override void Activate(Player user, Player opponent)
         {
-            // Todo: Testing
-            // Applies Energy Prism Effect for 3 Rounds.
             user.ApplyEffect(new EnergyPrismEffect(3));
         }
     }
@@ -33,7 +26,7 @@ namespace Nebula._79Nebula.Modules
 
         public override string Name => "Energy Prism";
 
-        public override string Description => $"{Name} increases your Defense by {PlayerBase.MinorMultiplier} per Intelligence. When {Name} ends, you gain Barrier based on your Healing.";
+        public override string Description => $"{Name} increases your Defense by {PlayerBase.MinorMultiplier} per Intelligence for {Duration} Rounds. When {Name} ends, you gain Barrier based on your Healing.";
 
         public override List<EffectType> EffectTypes => new List<EffectType>(){
             EffectType.Buff,
@@ -62,15 +55,10 @@ namespace Nebula._79Nebula.Modules
             Duration--;
             if (Duration <= 0)
             {
-
+                this.Remove();
             }
-
-            // Todo: Testing
-            player.RemoveEffect(this);
         }
 
-
-        // Todo: Testing
         public override bool Equals(object obj)
         {
             if (!base.Equals(obj))
@@ -88,7 +76,6 @@ namespace Nebula._79Nebula.Modules
             return true;
         }
 
-        // Todo: Testing
         public override int GetHashCode()
         {
             return this.Duration * 17 + base.GetHashCode();

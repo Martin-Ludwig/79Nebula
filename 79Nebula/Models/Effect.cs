@@ -1,20 +1,26 @@
 ﻿using Nebula._79Nebula.Enums;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
     public abstract class Effect
     {
-        public virtual string Name => "Example Effect";
+        public virtual string Name => "Default Effect";
         public virtual string Description => "No description given.";
         public virtual List<EffectType> EffectTypes => new List<EffectType>(){
             EffectType.untyped
         };
+
+        private EffectState State { get; set; } = EffectState.Active;
+
+        public bool IsActive { get { return State.Equals(EffectState.Active); } }
+
+        public void Remove()
+        {
+            State = EffectState.Removed;
+        }
 
         public Effect()
         {
@@ -39,7 +45,7 @@ namespace Nebula._79Nebula.Models
 
         public override bool Equals(object obj)
         {
-            var other = obj as Effect;
+            Effect other = (Effect)obj;
 
             if (other == null)
             {
@@ -60,16 +66,29 @@ namespace Nebula._79Nebula.Models
                 return false;
             }
 
+            if (!this.IsActive.Equals(other.IsActive))
+            {
+                return false;
+            }
+
 
             return true;
         }
 
         public override int GetHashCode()
         {
-            int hash1 = this.EffectTypes.Sum(e => Convert.ToInt32(e)) * 1999 + this.EffectTypes.Count;
+            int hash1 = this.EffectTypes.Sum(e => Convert.ToInt32(e)) * 1999 + this.EffectTypes.Count + (int) State;
 
             return hash1 * 37 + this.Name.GetHashCode();
         }
 
+        private enum EffectState
+        {
+            Active,
+            Removed
+        }
+
     }
+
+
 }

@@ -29,8 +29,7 @@ namespace Tests
         [Test]
         public void FifeModulesTest()
         {
-            Player test;
-            test = new Player("Test Player", 1, 1, 1,
+            Player test = new Player("Test Player", 1, 1, 1,
                 new List<string>() { "Default1", "Default2", "Default3", "Default4", "Default5" });
             
             Assert.IsNotNull(test);

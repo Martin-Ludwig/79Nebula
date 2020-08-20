@@ -1,11 +1,5 @@
 ﻿using Nebula._79Nebula.Effects;
 using Nebula._79Nebula.Enums;
-using Nebula._79Nebula.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
@@ -180,8 +174,8 @@ namespace Nebula._79Nebula.Models
         }
         private void OnRoundEnd()
         {
-            _player.Effects.ForEach(o => o.OnRoundEnd(_player));
-            _opponent.Effects.ForEach(o => o.OnRoundEnd(_opponent));
+            _player.Effects.OnRoundEnd(_player);
+            _opponent.Effects.OnRoundEnd(_opponent);
         }
 
     }

@@ -1,11 +1,7 @@
-﻿using Nebula._79Nebula.Exceptions;
-using System;
+﻿using Nebula._79Nebula.Enums;
+using Nebula._79Nebula.Exceptions;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using AllModules = Nebula._79Nebula.Models.Modules;
 
 namespace Nebula._79Nebula.Models
@@ -51,7 +47,7 @@ namespace Nebula._79Nebula.Models
         }
 
         public new List<Module> Modules;
-        public List<Effect> Effects = new List<Effect>();
+        public EffectList Effects = new EffectList();
 
         // Stat Modifier
         public int StrengthModifier { get; set; } = 0;
@@ -144,6 +140,7 @@ namespace Nebula._79Nebula.Models
         /// <summary>
         /// Adds an effect to the player.
         /// </summary>
+        /// <returns>True if the effect is successfully applied, else false</returns>
         public bool ApplyEffect(Effect effect)
         {
             Effects.Add(effect);
@@ -153,20 +150,19 @@ namespace Nebula._79Nebula.Models
         }
 
 
-        // Todo: Using Equal (not Hashcode)
         /// <summary>
-        /// Remove an effect by object (checks hashcode)
+        /// Removes the exact same effect
         /// </summary>
-        /// <returns>True if effect is successfully removed, else false</returns>
+        /// <returns>True if the effect is successfully removed, else false</returns>
         public bool RemoveEffect(Effect effect)
         {
             Effect e;
-            e = Effects.Find(o => o.GetHashCode() == effect.GetHashCode());
+            e = Effects.Find(o => o.Equals(effect) && o.IsActive);
 
             if (e != null)
             {
+                e.Remove();
                 e.OnRemove(this);
-                Effects.Remove(e);
                 return true;
             }
             else
@@ -176,11 +172,51 @@ namespace Nebula._79Nebula.Models
         }
 
         /// <summary>
-        /// Returns the amount of how often the effect is applied to the player.
+        /// Removes the first effect with the same name
         /// </summary>
+        /// <returns>True if effect is successfully removed, else false</returns>
+        public bool RemoveEffectByName(Effect effect)
+        {
+            Effect e;
+            e = Effects.Find(o => o.Name.Equals(effect.Name) && o.IsActive);
+
+            if (e != null)
+            {
+                e.Remove();
+                e.OnRemove(this);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        public bool RemoveEffectByType(EffectType effectType)
+        {
+            Effect e;
+            e = Effects.Find(o => o.EffectTypes.Contains(effectType) && o.IsActive);
+
+            if (e != null)
+            {
+                e.Remove();
+                e.OnRemove(this);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Counts the common occurences by comapring the name by the given effect.
+        /// </summary>
+        /// <returns>Returns the amount of how often the effect is applied to the player.</returns>
         public int HasEffect(Effect effect)
         {
-            int n = Effects.FindAll(o => o.Name == effect.Name).Count;
+            int n = Effects.FindAll(o => ((o.Name == effect.Name) && o.IsActive)).Count;
 
             return n;
         }

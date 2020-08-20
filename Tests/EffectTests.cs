@@ -1,15 +1,65 @@
-﻿using Nebula._79Nebula.Effects;
+﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Nebula._79Nebula.Effects;
+using Nebula._79Nebula.Enums;
+using Nebula._79Nebula.Interfaces;
 using Nebula._79Nebula.Models;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Tests
 {
     class EffectTests
     {
+
+        class DummyEffect : Effect, IDuration
+        {
+            public override string Name => "Test Effect";
+
+            public override string Description => $"Testing.";
+
+            public override List<EffectType> EffectTypes => new List<EffectType>(){
+                EffectType.Duration
+            };
+
+            public int Duration { get; set; }
+
+            public DummyEffect(int duration)
+            {
+                Duration = duration;
+            }
+            public override void OnRoundEnd(Player player)
+            {
+                Duration--;
+                if (Duration <= 0)
+                {
+                    this.Remove();
+                }
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!base.Equals(obj))
+                {
+                    return false;
+                }
+
+                var other = obj as DummyEffect;
+
+                if (!this.Duration.Equals(other.Duration))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return this.Duration * 17 + base.GetHashCode();
+            }
+
+        }
 
         Player player;
 
@@ -22,93 +72,70 @@ namespace Tests
         }
 
         [Test]
-        public void ApplyEffectTest()
-        {
-            Effect effect = new InitiatorBonus();
-
-            Assert.IsTrue(player.ApplyEffect(effect));
-
-            Assert.Pass();
-        }
-
-        [Test]
-        public void ApplyEffectTest2()
-        {
-            Assert.IsTrue(player.ApplyEffect(new InitiatorBonus()));
-        }
-
-        [Test]
-        public void HasEffectTest1()
+        public void ApplyEffect()
         {
             Effect effect = new InitiatorBonus();
 
             Assert.IsTrue(player.ApplyEffect(effect));
             Assert.AreEqual(1, player.HasEffect(effect));
+
+            Assert.IsTrue(player.ApplyEffect(new InitiatorBonus()));
+            Assert.AreEqual(2, player.HasEffect(new InitiatorBonus()));
         }
 
         [Test]
-        public void HasEffectTest2()
+        public void RemoveEffect()
         {
-            Effect effect = new InitiatorBonus();
 
-            Assert.IsTrue(player.ApplyEffect(effect));
-            Assert.AreEqual(1, player.HasEffect(new InitiatorBonus()));
-        }
+            Assert.IsTrue(player.ApplyEffect(new InitiatorBonus()));
+            Assert.IsTrue(player.ApplyEffect(new InitiatorBonus()));
 
-        [Test]
-        public void RemoveEffectByEffectTest1()
-        {
-            Effect effect = new InitiatorBonus();
+            Assert.AreEqual(2, player.HasEffect(new InitiatorBonus()));
 
-            Assert.IsTrue(player.ApplyEffect(effect));
             Assert.IsTrue(player.RemoveEffect(new InitiatorBonus()));
 
-            Assert.AreEqual(0, player.HasEffect(effect));
+            Effect e = new InitiatorBonus();
+            Assert.AreEqual(1, player.HasEffect(e));
+            Assert.IsTrue(player.RemoveEffect(e));
             Assert.AreEqual(0, player.HasEffect(new InitiatorBonus()));
+
+            Assert.IsFalse(player.RemoveEffect(e));
+
         }
 
         [Test]
-        public void RemoveEffectByEffectTest2()
+        public void Duration()
         {
-            Effect effect = new InitiatorBonus();
 
-            Assert.IsTrue(player.ApplyEffect(effect));
-            Assert.IsTrue(player.RemoveEffect(effect));
+            player.ApplyEffect(new DummyEffect(3));
+            player.ApplyEffect(new DummyEffect(2));
+            player.ApplyEffect(new DummyEffect(1));
+            Console.WriteLine(player.Effects.CountActive);
 
-            Assert.AreEqual(0, player.HasEffect(effect));
-            Assert.AreEqual(0, player.HasEffect(new InitiatorBonus()));
+            Assert.AreEqual(3, player.HasEffect(new DummyEffect(0)));
+
+            player.Effects.OnRoundEnd(player);
+
+            Console.WriteLine(player.Effects.CountActive);
+            Assert.AreEqual(2, player.HasEffect(new DummyEffect(0)));
+
+            player.Effects.OnRoundEnd(player);
+            Console.WriteLine(player.Effects.CountActive);
+            Assert.AreEqual(1, player.HasEffect(new DummyEffect(0)));
+
+            player.Effects.OnRoundEnd(player);
+            Console.WriteLine(player.Effects.CountActive);
+            Assert.AreEqual(0, player.HasEffect(new DummyEffect(0)));
+
         }
 
-        [Test]
-        public void RemoveEffectByHashcodeTest()
+
+
+        [TestCase(1, 2, false)]
+        [TestCase(3, 3, true)]
+        public void EqualEffectWithDuration(int x, int y, bool expected)
         {
-            Effect effect = new InitiatorBonus();
-
-            Assert.IsTrue(player.ApplyEffect(effect));
-            Assert.IsTrue(player.RemoveEffect(effect.GetHashCode()));
-
-            Assert.AreEqual(0, player.HasEffect(effect));
-            Assert.AreEqual(0, player.HasEffect(new InitiatorBonus()));
-        }
-
-        [Test]
-        public void HashcodeTest()
-        {
-            // Fails at 10,000
-            int n = 1000;
-
-            List<Effect> effects = new List<Effect>();
-
-            for (int i = 0; i < n; i++)
-                effects.Add(new InitiatorBonus());
-
-            for (int i = 0; i < n; i++)
-                for (int j = i+1; j < n; j++)
-                    if (i != j)
-                        Assert.AreNotEqual(effects.ElementAt(i).GetHashCode(), effects.ElementAt(j).GetHashCode());
-
-
-            Assert.Pass();
+            Assert.AreEqual(expected, new DummyEffect(x).Equals(new DummyEffect(y)));
         }
 
     }
