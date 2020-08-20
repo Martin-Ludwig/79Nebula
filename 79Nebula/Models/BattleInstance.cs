@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Models
 {
+
+    // Work in Progress (+ Todo: Refactoring)
     public class BattleInstance
     {
         public Player Player;

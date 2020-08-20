@@ -30,11 +30,46 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         public virtual void OnRemove(Player player) { }
 
+        public virtual void OnRoundEnd(Player player) { }
+
         public override string ToString()
         {
             return $"{Name}, Type: {EffectTypes}\n\t{Description}";
         }
 
+        public override bool Equals(object obj)
+        {
+            var other = obj as Effect;
+
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (!this.Name.Equals(other.Name)) {
+                return false;
+            }
+
+            if (!this.Description.Equals(other.Description))
+            {
+                return false;
+            }
+
+            if (!this.EffectTypes.SequenceEqual(other.EffectTypes))
+            {
+                return false;
+            }
+
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int hash1 = this.EffectTypes.Sum(e => Convert.ToInt32(e)) * 1999 + this.EffectTypes.Count;
+
+            return hash1 * 37 + this.Name.GetHashCode();
+        }
 
     }
 }

@@ -8,13 +8,7 @@ namespace Nebula._79Nebula.Interfaces
 {
     public interface IDuration
     {
-        int Duration { get; set; }
-        int DurationPassed { get; set; }
-        
-        bool IsExpired()
-        {
-            return DurationPassed >= Duration;
-        }
+        public int Duration { get; set; }
 
     }
 }

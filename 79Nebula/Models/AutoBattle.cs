@@ -81,6 +81,8 @@ namespace Nebula._79Nebula.Models
             }
 
             // Todo: Trigger OnRoundEnd
+            OnRoundEnd();
+            CheckPrematureEnd();
 
             // Remove Initiator Bonus from faster player
             player1.RemoveEffect(new InitiatorBonus());
@@ -175,6 +177,11 @@ namespace Nebula._79Nebula.Models
             {
                 return AutoBattleState.Lost;
             }
+        }
+        private void OnRoundEnd()
+        {
+            _player.Effects.ForEach(o => o.OnRoundEnd(_player));
+            _opponent.Effects.ForEach(o => o.OnRoundEnd(_opponent));
         }
 
     }

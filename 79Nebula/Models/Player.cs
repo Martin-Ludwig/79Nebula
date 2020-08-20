@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AllModules = Nebula._79Nebula.Models.Modules;
@@ -29,7 +30,7 @@ namespace Nebula._79Nebula.Models
                 for (int i = 0; i < AutoBattle.MaxRounds; i++) {
                     // Get module object by string name
                     Module module = AllModules.Get(modules[i]);
-                    if (module.Priority >= i-1 && module.Priority <= i+1)
+                    if (module.Priority >= i - 1 && module.Priority <= i + 1)
                     {
                         Modules.Add(module);
                     }
@@ -37,7 +38,7 @@ namespace Nebula._79Nebula.Models
                     {   // Module's priority is out of range
                         throw new PlayerCreationException(
                             $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). " +
-                            $"Priority of module #{i} (\"{modules[i]}\") is not in range. Expected priority {i-1} between {i+1}. "
+                            $"Priority of module #{i} (\"{modules[i]}\") is not in range. Expected priority {i - 1} between {i + 1}. "
                         );
                     }
                 }
@@ -50,7 +51,7 @@ namespace Nebula._79Nebula.Models
         }
 
         public new List<Module> Modules;
-        private readonly List<Effect> Effects = new List<Effect>();
+        public List<Effect> Effects = new List<Effect>();
 
         // Stat Modifier
         public int StrengthModifier { get; set; } = 0;
@@ -151,35 +152,21 @@ namespace Nebula._79Nebula.Models
             return true;
         }
 
+
+        // Todo: Using Equal (not Hashcode)
         /// <summary>
-        /// Remove an effect by object (checks name)
+        /// Remove an effect by object (checks hashcode)
         /// </summary>
         /// <returns>True if effect is successfully removed, else false</returns>
         public bool RemoveEffect(Effect effect)
         {
             Effect e;
-            e = Effects.Find(o => o.Name == effect.Name);
+            e = Effects.Find(o => o.GetHashCode() == effect.GetHashCode());
 
             if (e != null)
             {
                 e.OnRemove(this);
                 Effects.Remove(e);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Removes an effect by its hashcode.
-        /// </summary>
-        /// <returns>True if effect is successfully removed, else false</returns>
-        public bool RemoveEffect(int hashcode)
-        {
-            if (Effects.RemoveAll(o => o.GetHashCode() == hashcode) > 0)
-            {
                 return true;
             }
             else
