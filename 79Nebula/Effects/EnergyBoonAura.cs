@@ -16,10 +16,23 @@ namespace Nebula._79Nebula.Effects
             EffectType.Aura,
             EffectType.Buff
         };
-    
-        // Todo: OnBarrierLosing
-        // Todo: OnBarrierGain
-        // Todo: OnInitiate
+
+        public override void OnBarrierChange(Player player, ref int value)
+        {
+            if (value > 0)
+            {
+                player.GainHealth(value);
+            }
+            else
+            {
+                player.LoseHealth(value);
+            }
+        }
+
+        public override void OnInitiation(Player player)
+        {
+            player.GainBarrier(player.Healing);
+        }
 
     }
 }

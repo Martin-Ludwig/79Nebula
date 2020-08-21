@@ -99,6 +99,7 @@ namespace Nebula._79Nebula.Models
         public override int Health
         {
             get { return base.Health + Healed - Damaged; }
+            set { this.HealthBase = value; }
         }
 
         // Health modifiers in battle
@@ -117,13 +118,14 @@ namespace Nebula._79Nebula.Models
             get { return _barrier; }
             set
             {
+                Effects.OnBarrierChange(this, ref value);
                 if ((_barrier + value) >= (Health / 2))
                 {
                     _barrier = (Health / 2);
                 }
                 else
                 {
-                    _barrier += value;
+                    _barrier = value;
                 }
             }
         }
@@ -409,11 +411,21 @@ namespace Nebula._79Nebula.Models
         }
 
         /// <summary>
-        /// Player directly gains health without triggering any actions. Ignores Healing attriute.
+        /// Player directly gains health without triggering any actions.
         /// </summary>
         public void GainHealth(int n)
         {
             Healed += n;
+        }
+
+        /// <summary>
+        /// Increases Player's Barrier.
+        /// </summary>
+        public void GainBarrier(int n)
+        {
+            Effects.OnBarrerGain(this, ref n);
+
+            Barrier += n;
         }
 
         /// <summary>

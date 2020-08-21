@@ -37,6 +37,10 @@ namespace Nebula._79Nebula.Models
         public virtual void OnRemove(Player player) { }
 
         /// <summary>
+        /// Triggers at the start of each round.
+        /// </summary>
+        public virtual void OnRoundStart(Player player) { }
+        /// <summary>
         /// Triggers at the end of each round.
         /// </summary>
         public virtual void OnRoundEnd(Player player) { }
@@ -70,11 +74,25 @@ namespace Nebula._79Nebula.Models
         /// <param name="damageIn">Value of health that you will lose.</param>
         public virtual void OnIncomingCritAttack(Player player, ref int damageIn) { }
 
+        /// <summary>
+        /// Player gains Barrier.
+        /// </summary>
+        /// <param name="player">User</param>
+        /// <param name="barrierIn">Amount of Barrier you gain.</param>
+        public virtual void OnBarrerGain(Player player, ref int barrierIn) { }
 
+        /// <summary>
+        /// Player gained or lost Barrier.
+        /// </summary>
+        /// <param name="player">User</param>
+        /// <param name="value">Amount of change</param>
+        public virtual void OnBarrierChange(Player player, ref int value) { }
 
-
-
-
+        /// <summary>
+        /// Triggers when the player is faster than the opponent and begins the round.
+        /// </summary>
+        /// <param name="player"></param>
+        public virtual void OnInitiation(Player player) { }
 
 
         public override string ToString()

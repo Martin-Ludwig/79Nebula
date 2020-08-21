@@ -39,7 +39,7 @@ namespace Nebula._79Nebula.Models
         public const int VitalityMultiplier = 5;
 
         // Base health every player starts with.
-        public const int HealthBase = 100;
+        public int HealthBase = 100;
 
         // Attack = 2 * Intelligence + Strength
         public virtual int Attack
@@ -75,6 +75,7 @@ namespace Nebula._79Nebula.Models
         public virtual int Health
         {
             get { return HealthBase + Vitality * VitalityMultiplier; }
+            set { this.HealthBase = value; }
         }
 
         public PlayerBase(string name, int strength, int agility, int intelligence, List<string> modules)

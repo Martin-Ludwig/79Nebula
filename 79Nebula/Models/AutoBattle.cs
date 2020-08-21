@@ -27,6 +27,9 @@ namespace Nebula._79Nebula.Models
             for (int round = 0; round < MaxRounds; round++)
             {   // Do rounds 0 to 4
 
+                OnRoundStart();
+                CheckPrematureEnd();
+
                 if (IsPlayerFaster(round, lastRoundPlayerFirst))
                 {
                     // Player starts round
@@ -53,28 +56,20 @@ namespace Nebula._79Nebula.Models
         {
             // Apply Initiator Bonus to faster player
             player1.ApplyEffect(new InitiatorBonus());
-
-            // Todo: Trigger OnRoundStart
+            player1.Effects.OnInitiation(player1);
 
             if (State == AutoBattleState.IsRunning)
-            {
-                // Player 1 Action
+            {   // Player 1 Turn
                 UseModule(round, player1, player2);
-                
-                // Check if any player's health is zero or below
                 CheckPrematureEnd();
             }
 
             if (State == AutoBattleState.IsRunning)
-            {
-                // Player 2 Action
+            {   // Player 2 Turn
                 UseModule(round, player2, player1);
-
-                // Check if any player's health is zero or below
                 CheckPrematureEnd();
             }
 
-            // Todo: Trigger OnRoundEnd
             OnRoundEnd();
             CheckPrematureEnd();
 
@@ -172,6 +167,13 @@ namespace Nebula._79Nebula.Models
                 return AutoBattleState.Lost;
             }
         }
+
+        private void OnRoundStart()
+        {
+            _player.Effects.OnRoundStart(_player);
+            _opponent.Effects.OnRoundStart(_opponent);
+        }
+
         private void OnRoundEnd()
         {
             _player.Effects.OnRoundEnd(_player);

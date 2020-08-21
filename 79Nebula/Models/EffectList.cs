@@ -10,6 +10,19 @@ namespace Nebula._79Nebula.Models
         public int CountActive { get { return this.FindAll(o => o.IsActive).Count; } }
 
         /// <summary>
+        /// Executes OnRoundStart() for each effect.
+        /// </summary>
+        public void OnRoundStart(Player player)
+        {
+            this.ForEach(o => {
+                if (o.IsActive)
+                {
+                    o.OnRoundStart(player);
+                }
+            });
+        }
+
+        /// <summary>
         /// Executes OnRoundEnd() for each effect.
         /// </summary>
         public void OnRoundEnd(Player player)
@@ -78,6 +91,46 @@ namespace Nebula._79Nebula.Models
             }
         }
 
+        /// <summary>
+        /// Executes OnBarrerGain() for each effect.
+        /// </summary>
+        public void OnBarrerGain(Player player, ref int barrierIn)
+        {
+            foreach (Effect effect in this)
+            {
+                if (effect.IsActive)
+                {
+                    effect.OnBarrerGain(player, ref barrierIn);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Executes OnBarrierChange() for each effect.
+        /// </summary>
+        public void OnBarrierChange(Player player, ref int value)
+        {
+            foreach (Effect effect in this)
+            {
+                if (effect.IsActive)
+                {
+                    effect.OnBarrierChange(player, ref value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Executes OnInitiation() for each effect.
+        /// </summary>
+        public void OnInitiation(Player player)
+        {
+            this.ForEach(o => {
+                if (o.IsActive)
+                {
+                    o.OnInitiation(player);
+                }
+            });
+        }
 
     }
 }
