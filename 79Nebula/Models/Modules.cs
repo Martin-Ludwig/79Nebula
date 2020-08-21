@@ -1,4 +1,5 @@
-﻿using Nebula._79Nebula.Exceptions;
+﻿using Nebula._79Nebula.Effects;
+using Nebula._79Nebula.Exceptions;
 using Nebula._79Nebula.Modules;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ namespace Nebula._79Nebula.Models
             { MODULE.Default4, new DefaultModule4() },
             { MODULE.Default5, new DefaultModule5() },
             { MODULE.Default6, new DefaultModule6() },
-            { MODULE.SecondWindAura, new SecondWindAura() }
         };
 
 
@@ -71,6 +71,5 @@ namespace Nebula._79Nebula.Models
         Default4 = 4,
         Default5 = 5,
         Default6 = 6,
-        SecondWindAura
     }
 }

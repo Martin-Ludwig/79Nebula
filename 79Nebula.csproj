@@ -71,6 +71,8 @@
     <Compile Include="79Nebula\DataAccess\Enemy_DataAccess.cs" />
     <Compile Include="79Nebula\Effects\EnergyBoonAura.cs" />
     <Compile Include="79Nebula\Effects\InitiatorBonus.cs" />
+    <Compile Include="79Nebula\Effects\_Template.cs" />
+    <Compile Include="79Nebula\Effects\Regeneration.cs" />
     <Compile Include="79Nebula\Effects\SecondWindAura.cs" />
     <Compile Include="79Nebula\Enums\AutoBattleState.cs" />
     <Compile Include="79Nebula\Enums\EffectType.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="79Nebula\Scripts\Button_Count_Increase.cs" />
     <Compile Include="79Nebula\Utils\FileHandler.cs" />
     <Compile Include="79Nebula\Utils\JsonHandler.cs" />
+    <Compile Include="79Nebula\Utils\Numbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
