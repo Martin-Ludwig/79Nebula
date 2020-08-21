@@ -23,31 +23,31 @@ namespace Nebula._79Nebula.Modules
 
     class EnergyPrismEffect : Effect, IDuration
     {
-
         public override string Name => "Energy Prism";
-
-        public override string Description => $"{Name} increases your Defense by {PlayerBase.MinorMultiplier} per Intelligence for {Duration} Rounds. When {Name} ends, you gain Barrier based on your Healing.";
-
+        public override string Description => $"When {Name} is applied your Defense is increased by {PlayerBase.MinorMultiplier} per Intelligence for {Duration} Rounds. When {Name} ends, you gain Barrier based on your Healing.";
         public override List<EffectType> EffectTypes => new List<EffectType>(){
             EffectType.Buff,
             EffectType.Duration
         };
-
         public int Duration { get; set; }
 
+        private int _defMod = 0;
         public EnergyPrismEffect(int duration)
         {
             Duration = duration;
         }
-        
+
+
         public override void OnApply(Player player)
         {
-            base.OnApply(player);
+            _defMod = player.Intelligence;
+            player.DefenseModifier += _defMod;
         }
 
         public override void OnRemove(Player player)
         {
-            base.OnRemove(player);
+            player.DefenseModifier -= _defMod;
+            player.Barrier += player.Healing;
         }
 
         public override void OnRoundEnd(Player player)
@@ -58,6 +58,7 @@ namespace Nebula._79Nebula.Modules
                 this.Remove();
             }
         }
+
 
         public override bool Equals(object obj)
         {
@@ -75,7 +76,6 @@ namespace Nebula._79Nebula.Modules
 
             return true;
         }
-
         public override int GetHashCode()
         {
             return this.Duration * 17 + base.GetHashCode();

@@ -149,7 +149,6 @@ namespace Nebula._79Nebula.Models
             return true;
         }
 
-
         /// <summary>
         /// Removes the exact same effect
         /// </summary>
@@ -221,9 +220,9 @@ namespace Nebula._79Nebula.Models
             return n;
         }
 
-        private bool IsCriticalAttack(Player opponent)
+        private bool IsCriticalAttack(Player opponent, int critBase)
         {
-            int crit = 0;
+            int crit = critBase;
             crit += CritBonus;
 
             if (Health > opponent.Health)
@@ -246,9 +245,9 @@ namespace Nebula._79Nebula.Models
             }
         }
 
-        private bool IsCriticalHealing()
+        private bool IsCriticalHealing(int critBase)
         {
-            int crit = 0;
+            int crit = critBase;
             crit += CritBonus;
 
             if (Healed > Damaged)
@@ -279,7 +278,7 @@ namespace Nebula._79Nebula.Models
         /// <param name="increasedAttack">Adds increased damage</param>
         /// <param name="isUnblockable">Ignores Defense</param>
         /// <returns>Amount of damage dealt to the opponent</returns>
-        public int AttackPlayer(Player opponent, int increasedAttack = 0, bool isUnblockable = false)
+        public int AttackPlayer(Player opponent, int increasedAttack = 0, bool isUnblockable = false, int critBase = 0)
         {
             // Todo: Trigger OnBeforePlayerAttack
 
@@ -288,15 +287,17 @@ namespace Nebula._79Nebula.Models
             // Todo: Opponent Trigger OnBeforeDamageTaken
 
             bool isCrit = false;
-            if (IsCriticalAttack(opponent))
+            if (IsCriticalAttack(opponent, critBase))
             {
                 isCrit = true;
                 attackDamage += 2;
+
+                Effects.OnCrit(this, ref attackDamage);
+                Effects.OnCritAttack(this, ref attackDamage, ref isUnblockable);
             }
             
             int damageDealt = opponent.TakeDamage(attackDamage, isUnblockable);
 
-            // Todo: Opponent Trigger OnAfterDamageTaken
 
             if (!isUnblockable && damageDealt <= 0)
             {   // Damage blocked
@@ -325,31 +326,32 @@ namespace Nebula._79Nebula.Models
         /// <param name="damage"></param>
         /// <param name="ignoreDefense"></param>
         /// <returns></returns>
-        public int TakeDamage(int damage, bool ignoreDefense = false)
+        public int TakeDamage(int damage, bool ignoreDefense = false, bool isCrit = false)
         {
-            int damageTaken;
-            if (ignoreDefense)
+
+            if (!ignoreDefense)
             {
-                damageTaken = damage;
-            }
-            else
-            {
-                damageTaken = damage - Defense;
+                damage -= Defense;
             }
 
-            if (damageTaken > 0)
+            if (isCrit)
+            {
+                Effects.OnIncomingCritAttack(this, ref damage);
+            }
+
+            if (damage > 0)
             {
 
-                if (Barrier > damageTaken)
+                if (Barrier > damage)
                 {   // Barrier absorbs all the damage.
-                    Barrier -= damageTaken;
+                    Barrier -= damage;
 
                     // Todo: Trigger OnBarrierAbsorbsFullDamage
 
                 }
                 else if (Barrier > 0)
                 {   // Barrier absorbs a portion of the damage.
-                    damageTaken -= Barrier;
+                    damage -= Barrier;
                     Barrier = 0;
 
                     // Todo: Trigger OnBarrierDestroyed
@@ -357,15 +359,18 @@ namespace Nebula._79Nebula.Models
                 }
 
                 // Deal damage to player.
-                LoseHealth(damageTaken);
+                LoseHealth(damage);
             }
             else
             {
                 // Make sure it is not negative.
-                damageTaken = 0;
+                damage = 0;
             }
 
-            return damageTaken;
+
+            // Todo: Trigger OnAfterDamageTaken
+
+            return damage;
         }
 
         /// <summary>
@@ -373,24 +378,26 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         /// <param name="increasedHealing">Amount of íncreased healing</param>
         /// <returns>Amount of how much the player was healed.</returns>
-        public int Heal(int increasedHealing)
+        public int Heal(int increasedHealing, int critBase = 0)
         {
             // Todo: Trigger OnBeforeHealing
 
-            int gainedHealing = 0;
+            int healing = 0;
 
-            if (IsCriticalHealing())
+            if (IsCriticalHealing(critBase))
             {
-                gainedHealing += 2;
+                healing += 2;
+                Effects.OnCrit(this, ref healing);
+                Effects.OnCritHeal(this, ref healing);
             }
 
-            gainedHealing += Healing + increasedHealing;
+            healing += Healing + increasedHealing;
 
-            GainHealth(gainedHealing);
+            GainHealth(healing);
 
             // Todo: Trigger OnAfterHealing
 
-            return gainedHealing;
+            return healing;
         }
 
         /// <summary>

@@ -36,13 +36,51 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         public virtual void OnRemove(Player player) { }
 
+        /// <summary>
+        /// Triggers at the end of each round.
+        /// </summary>
         public virtual void OnRoundEnd(Player player) { }
+
+        /// <summary>
+        /// Player executes a critical action. This Trigger combines CritHeal and CritAttack.
+        /// </summary>
+        /// <param name="player">User</param>
+        /// <param name="valueOut">Outgoing Damage/Healing</param>
+        public virtual void OnCrit(Player player, ref int valueOut) { }
+
+        /// <summary>
+        /// Player deals a critical attack.
+        /// </summary>
+        /// <param name="player">User</param>
+        /// <param name="damageOut">Power of your attack. (Before opponent defenses)</param>
+        /// <param name="isUnblockable">Whether opponent can block your attack.</param>
+        public virtual void OnCritAttack(Player player, ref int damageOut, ref bool isUnblockable) { }
+
+        /// <summary>
+        /// Player receives a critical healing.
+        /// </summary>
+        /// <param name="player">User</param>
+        /// <param name="healingOut">Power of your healing.</param>
+        public virtual void OnCritHeal(Player player, ref int healingOut) { }
+
+        /// <summary>
+        /// Opponent deals a critical attack to you.
+        /// </summary>
+        /// <param name="player">User</param>
+        /// <param name="damageIn">Value of health that you will lose.</param>
+        public virtual void OnIncomingCritAttack(Player player, ref int damageIn) { }
+
+
+
+
+
+
+
 
         public override string ToString()
         {
             return $"{Name}, Type: {EffectTypes}\n\t{Description}";
         }
-
         public override bool Equals(object obj)
         {
             Effect other = (Effect)obj;
@@ -74,7 +112,6 @@ namespace Nebula._79Nebula.Models
 
             return true;
         }
-
         public override int GetHashCode()
         {
             int hash1 = this.EffectTypes.Sum(e => Convert.ToInt32(e)) * 1999 + this.EffectTypes.Count + (int) State;

@@ -12,9 +12,9 @@ namespace Nebula._79Nebula.Effects
     {
         public override string Name => "Second Wind Aura";
         public override string Description => "Increases Initiative by 5. Your critical attacks and healings are increased by 2.";
-        public override List<EffectType> EffectTypes => new List<EffectType>(){ 
-            EffectType.Aura, 
-            EffectType.Buff 
+        public override List<EffectType> EffectTypes => new List<EffectType>(){
+            EffectType.Aura,
+            EffectType.Buff
         };
 
         public override void OnApply(Player player)
@@ -22,7 +22,17 @@ namespace Nebula._79Nebula.Effects
             player.InitiativeModifier += 5;
         }
 
-        // Todo: OnCrit()
+        public override void OnRemove(Player player)
+        {
+            player.InitiativeModifier -= 5;
+        }
+
+        public override void OnCrit(Player player, ref int valueOut)
+        {
+            valueOut += 2;
+        }
+
 
     }
+
 }
