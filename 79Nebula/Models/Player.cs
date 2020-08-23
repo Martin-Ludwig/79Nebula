@@ -1,5 +1,6 @@
 ﻿using Nebula._79Nebula.Enums;
 using Nebula._79Nebula.Exceptions;
+using Nebula._79Nebula.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using AllModules = Nebula._79Nebula.Models.Modules;
@@ -145,8 +146,17 @@ namespace Nebula._79Nebula.Models
         /// <returns>True if the effect is successfully applied, else false</returns>
         public bool ApplyEffect(Effect effect)
         {
-            Effects.Add(effect);
-            effect.OnApply(this);
+            if (effect is IStackable && this.HasEffect(effect) > 0)
+            {
+                Effect e = Effects.FindEffect(effect);
+                e.AddStack(effect.StackSize);
+            }
+            else
+            {
+                Effects.Add(effect);
+                effect.OnApply(this);
+            }
+
 
             return true;
         }
@@ -193,7 +203,6 @@ namespace Nebula._79Nebula.Models
             }
         }
 
-
         public bool RemoveEffectByType(EffectType effectType)
         {
             Effect e;
@@ -209,6 +218,32 @@ namespace Nebula._79Nebula.Models
             {
                 return false;
             }
+        }
+
+        public int RemoveEffectStacks(Effect effect, int stacks)
+        {
+            if (effect is IStackable)
+            {
+                int removedStacks = 0;
+                foreach (Effect e in Effects)
+                {
+                    if (e.Name.Equals(effect.Name) && e.IsActive)
+                    {
+                        removedStacks += e.RemoveStack(stacks);
+                        stacks -= removedStacks;
+                        if (stacks <= 0)
+                        {
+                            return removedStacks;
+                        }
+                    }
+                }
+                return removedStacks;
+            }
+            else
+            {
+                throw new EffectNotStackableException($"Cannot remove stacks from {effect.Name}");
+            }
+            
         }
 
         /// <summary>

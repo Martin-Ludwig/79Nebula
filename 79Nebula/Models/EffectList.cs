@@ -10,6 +10,22 @@ namespace Nebula._79Nebula.Models
         public int CountActive { get { return this.FindAll(o => o.IsActive).Count; } }
 
         /// <summary>
+        /// Returns the first element that matches the name,
+        ///     if found; otherwise, the default value.
+        /// </summary>
+        /// <param name="effect"></param>
+        /// <returns></returns>
+        public Effect FindEffect(Effect effect)
+        {
+            return this.Find(o => ((o.Name == effect.Name) && o.IsActive));
+        }
+
+        public List<Effect> FindAllEffects(Effect effect)
+        {
+            return this.FindAll(o => ((o.Name == effect.Name) && o.IsActive));
+        }
+
+        /// <summary>
         /// Executes OnRoundStart() for each effect.
         /// </summary>
         public void OnRoundStart(Player player)

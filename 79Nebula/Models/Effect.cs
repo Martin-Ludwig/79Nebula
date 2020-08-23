@@ -1,4 +1,6 @@
 ﻿using Nebula._79Nebula.Enums;
+using Nebula._79Nebula.Exceptions;
+using Nebula._79Nebula.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +24,54 @@ namespace Nebula._79Nebula.Models
             State = EffectState.Removed;
         }
 
+        public int StackSize { get; set; } = 0;
+
         public Effect()
         {
         }
+
+        /// <summary>
+        /// Adds stacks to effect.
+        /// </summary>
+        public void AddStack(int n = 1)
+        {
+            if (this is IStackable)
+            {
+                StackSize += n;
+            } else
+            {
+                throw new EffectNotStackableException($"{Name} is not stackable.");
+            }
+        }
+
+        /// <summary>
+        /// Removes stacks. Returns the amount of stacks that were removed.
+        /// </summary>
+        public int RemoveStack(int n = 1)
+        {
+            if (this is IStackable)
+            {
+                StackSize -= n;
+
+                if (StackSize <= 0)
+                {
+                    int amountRemoved = StackSize + n;
+
+                    StackSize = 0;
+                    this.Remove();
+
+                    return amountRemoved;
+                } else
+                {
+                    return n;
+                }
+            }
+            else
+            {
+                throw new EffectNotStackableException($"{Name} is not stackable.");
+            }
+        }
+
 
         /// <summary>
         /// Triggers when this effect is applied to a player.
@@ -126,7 +173,6 @@ namespace Nebula._79Nebula.Models
             {
                 return false;
             }
-
 
             return true;
         }
