@@ -1,5 +1,4 @@
 ﻿using Nebula._79Nebula.Enums;
-using Nebula._79Nebula.Extensions;
 using Nebula._79Nebula.Interfaces;
 using Nebula._79Nebula.Models;
 using Nebula._79Nebula.Utils;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Nebula._79Nebula.Effects
 {
-    class Regeneration : Effect, IStackable
+    public class Regeneration : Effect, IStackable
     {
         public override string Name => "Regeneration";
         public override string Description => $"{Name} heals you for {_baseHealing} + Healing * {_coefficient} at the end of every round.";

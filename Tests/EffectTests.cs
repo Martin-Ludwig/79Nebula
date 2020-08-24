@@ -129,13 +129,84 @@ namespace Tests
 
         }
 
-
-
         [TestCase(1, 2, false)]
         [TestCase(3, 3, true)]
         public void EqualEffectWithDuration(int x, int y, bool expected)
         {
             Assert.AreEqual(expected, new DummyEffect(x).Equals(new DummyEffect(y)));
+        }
+
+        [Test]
+        public void ApplyEffectWithStacks()
+        {
+            player.ApplyEffect(new Regeneration(5));
+            
+            Effect e = player.Effects.FindEffect(new Regeneration());
+            Assert.AreEqual(5, e.StackSize);
+        }
+
+        [Test]
+        public void RemoveEffectStacksTest()
+        {
+            player.ApplyEffect(new Regeneration(5));
+
+            int removedStacks = player.RemoveEffectStacks(new Regeneration(), 3);
+            Assert.AreEqual(3, removedStacks);
+
+            Effect e = player.Effects.FindEffect(new Regeneration());
+            Assert.AreEqual(2, e.StackSize);
+        }
+
+        [Test]
+        public void DeactivateEffectByZeroStacks()
+        {
+            player.ApplyEffect(new Regeneration(5));
+
+            int removedStacks = player.RemoveEffectStacks(new Regeneration(), 7);
+            Assert.AreEqual(5, removedStacks);
+
+            Effect e = player.Effects.FindEffect(new Regeneration());
+            Assert.IsNull(e);
+        }
+
+        [Test]
+        public void ApplyStacks()
+        {
+            player.ApplyEffect(new Regeneration(5));
+            player.ApplyEffect(new Regeneration(5));
+
+            Effect e = player.Effects.FindEffect(new Regeneration());
+            Assert.AreEqual(10, e.StackSize);
+        }
+
+        [Test]
+        public void EffectStacksBigTest()
+        {
+            Effect e;
+
+            player.ApplyEffect(new Regeneration(4));
+            player.ApplyEffect(new Regeneration(4));
+            player.ApplyEffect(new Regeneration(4));
+
+            e = player.Effects.FindEffect(new Regeneration());
+            Console.WriteLine(e.StackSize);
+
+            int removedStacks = player.RemoveEffectStacks(new Regeneration(), 7);
+            int removedStacks2 = player.RemoveEffectStacks(new Regeneration(), 3);
+
+            Assert.AreEqual(7, removedStacks);
+            Assert.AreEqual(3, removedStacks2);
+
+            e = player.Effects.FindEffect(new Regeneration());
+            Assert.AreEqual(2, e.StackSize);
+
+            int removedStacks3 = player.RemoveEffectStacks(new Regeneration(), 99);
+            player.ApplyEffect(new Regeneration(4));
+
+            e = player.Effects.FindEffect(new Regeneration());
+            Assert.AreEqual(4, e.StackSize);
+
+            Assert.AreEqual(2, removedStacks3);
         }
 
     }
