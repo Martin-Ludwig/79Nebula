@@ -13,6 +13,7 @@ namespace Nebula._79Nebula.Enums
         Spell,
         Aura,
         Support,
-        Duration
+        Duration,
+        Heal
     }
 }

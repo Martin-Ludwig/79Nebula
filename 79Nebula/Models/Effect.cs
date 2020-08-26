@@ -97,7 +97,7 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         /// <param name="player">User</param>
         /// <param name="valueOut">Outgoing Damage/Healing</param>
-        public virtual void OnCrit(Player player, ref int valueOut) { }
+        public virtual void OnCrit(Player player, ref double valueOut) { }
 
         /// <summary>
         /// Player deals a critical attack.
@@ -105,28 +105,28 @@ namespace Nebula._79Nebula.Models
         /// <param name="player">User</param>
         /// <param name="damageOut">Power of your attack. (Before opponent defenses)</param>
         /// <param name="isUnblockable">Whether opponent can block your attack.</param>
-        public virtual void OnCritAttack(Player player, ref int damageOut, ref bool isUnblockable) { }
+        public virtual void OnCritAttack(Player player, ref double damageOut, ref bool isUnblockable) { }
 
         /// <summary>
         /// Player receives a critical healing.
         /// </summary>
         /// <param name="player">User</param>
         /// <param name="healingOut">Power of your healing.</param>
-        public virtual void OnCritHeal(Player player, ref int healingOut) { }
+        public virtual void OnCritHeal(Player player, ref double healingOut) { }
 
         /// <summary>
         /// Opponent deals a critical attack to you.
         /// </summary>
         /// <param name="player">User</param>
         /// <param name="damageIn">Value of health that you will lose.</param>
-        public virtual void OnIncomingCritAttack(Player player, ref int damageIn) { }
+        public virtual void OnIncomingCritAttack(Player player, ref double damageIn) { }
 
         /// <summary>
         /// Player gains Barrier.
         /// </summary>
         /// <param name="player">User</param>
         /// <param name="barrierIn">Amount of Barrier you gain.</param>
-        public virtual void OnBarrerGain(Player player, ref int barrierIn) { }
+        public virtual void OnBarrerGain(Player player, ref double barrierIn) { }
 
         /// <summary>
         /// Player gained or lost Barrier.

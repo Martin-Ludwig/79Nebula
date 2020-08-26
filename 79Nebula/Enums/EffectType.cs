@@ -13,6 +13,7 @@ namespace Nebula._79Nebula.Enums
         Debuff,
         Aura,
         Duration,
-        Boon
+        Boon,
+        Condition
     }
 }

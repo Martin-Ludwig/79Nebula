@@ -1,6 +1,9 @@
-﻿using Nebula._79Nebula.Enums;
+﻿using Nebula._79Nebula.Effects;
+using Nebula._79Nebula.Enums;
 using Nebula._79Nebula.Exceptions;
 using Nebula._79Nebula.Interfaces;
+using Nebula._79Nebula.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AllModules = Nebula._79Nebula.Models.Modules;
@@ -252,7 +255,14 @@ namespace Nebula._79Nebula.Models
         /// <returns>Returns the amount of how often the effect is applied to the player.</returns>
         public int HasEffect(Effect effect)
         {
-            int n = Effects.FindAll(o => ((o.Name == effect.Name) && o.IsActive)).Count;
+            int n = 0;
+            if (effect is IStackable)
+            {
+                n = Effects.Find(o => ((o.Name == effect.Name) && o.IsActive)).StackSize;
+            } else
+            {
+                n = Effects.FindAll(o => ((o.Name == effect.Name) && o.IsActive)).Count;
+            }
 
             return n;
         }
@@ -315,11 +325,9 @@ namespace Nebula._79Nebula.Models
         /// <param name="increasedAttack">Adds increased damage</param>
         /// <param name="isUnblockable">Ignores Defense</param>
         /// <returns>Amount of damage dealt to the opponent</returns>
-        public int AttackPlayer(Player opponent, int increasedAttack = 0, bool isUnblockable = false, int critBase = 0)
+        public int AttackPlayer(Player opponent, double damage, bool isUnblockable = false, bool ignoreDefense = false, int critBase = 0)
         {
             // Todo: Trigger OnBeforePlayerAttack
-
-            int attackDamage = Attack + increasedAttack;
 
             // Todo: Opponent Trigger OnBeforeDamageTaken
 
@@ -327,14 +335,18 @@ namespace Nebula._79Nebula.Models
             if (IsCriticalAttack(opponent, critBase))
             {
                 isCrit = true;
-                attackDamage += 2;
+                damage += 2;
 
-                Effects.OnCrit(this, ref attackDamage);
-                Effects.OnCritAttack(this, ref attackDamage, ref isUnblockable);
+                Effects.OnCrit(this, ref damage);
+                Effects.OnCritAttack(this, ref damage, ref isUnblockable);
             }
-            
-            int damageDealt = opponent.TakeDamage(attackDamage, isUnblockable);
 
+            if (!ignoreDefense)
+            {
+                damage = damage * (Math.Pow(0.5, (opponent.Defense / Attack) + 0.5) + (Attack - opponent.Defense));
+            }
+
+            int damageDealt = opponent.TakeDamage(damage, isUnblockable);
 
             if (!isUnblockable && damageDealt <= 0)
             {   // Damage blocked
@@ -346,7 +358,7 @@ namespace Nebula._79Nebula.Models
             {
                 if (isCrit)
                 {
-                    // Todo: bleeding on crit
+                    opponent.ApplyEffect(new Bleeding(1));
                 }
             }
 
@@ -363,32 +375,29 @@ namespace Nebula._79Nebula.Models
         /// <param name="damage"></param>
         /// <param name="ignoreDefense"></param>
         /// <returns></returns>
-        public int TakeDamage(int damage, bool ignoreDefense = false, bool isCrit = false)
+        public int TakeDamage(double damage = 0, bool isCrit = false)
         {
-
-            if (!ignoreDefense)
-            {
-                damage -= Defense;
-            }
 
             if (isCrit)
             {
                 Effects.OnIncomingCritAttack(this, ref damage);
             }
 
-            if (damage > 0)
+            int incomingDamage = Numbers.RoundToInt(damage);
+
+            if (incomingDamage > 0)
             {
 
-                if (Barrier > damage)
+                if (Barrier > incomingDamage)
                 {   // Barrier absorbs all the damage.
-                    Barrier -= damage;
+                    Barrier -= incomingDamage;
 
                     // Todo: Trigger OnBarrierAbsorbsFullDamage
 
                 }
                 else if (Barrier > 0)
                 {   // Barrier absorbs a portion of the damage.
-                    damage -= Barrier;
+                    incomingDamage -= Barrier;
                     Barrier = 0;
 
                     // Todo: Trigger OnBarrierDestroyed
@@ -396,18 +405,18 @@ namespace Nebula._79Nebula.Models
                 }
 
                 // Deal damage to player.
-                LoseHealth(damage);
+                LoseHealth(incomingDamage);
             }
             else
             {
                 // Make sure it is not negative.
-                damage = 0;
+                incomingDamage = 0;
             }
 
 
             // Todo: Trigger OnAfterDamageTaken
 
-            return damage;
+            return incomingDamage;
         }
 
         /// <summary>
@@ -415,52 +424,53 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         /// <param name="increasedHealing">Amount of íncreased healing</param>
         /// <returns>Amount of how much the player was healed.</returns>
-        public int Heal(int increasedHealing, int critBase = 0)
+        public double Heal(double amount, int critBase = 0)
         {
             // Todo: Trigger OnBeforeHealing
 
-            int healing = 0;
-
             if (IsCriticalHealing(critBase))
             {
-                healing += 2;
-                Effects.OnCrit(this, ref healing);
-                Effects.OnCritHeal(this, ref healing);
+                ApplyEffect(new Regeneration(1));
+                amount += 2;
+
+                Effects.OnCrit(this, ref amount);
+                Effects.OnCritHeal(this, ref amount);
             }
 
-            healing += Healing + increasedHealing;
 
-            GainHealth(healing);
+            int finalHeal = Numbers.RoundToInt(amount);
+
+            GainHealth(finalHeal);
 
             // Todo: Trigger OnAfterHealing
 
-            return healing;
+            return finalHeal;
         }
 
         /// <summary>
         /// Player directly loses health without triggering any actions. Ignores Defense and Barrier.
         /// </summary>
-        public void LoseHealth(int n)
+        public void LoseHealth(double n)
         {
-            Damaged += n;
+            Damaged += Numbers.RoundToInt(n);
         }
 
         /// <summary>
         /// Player directly gains health without triggering any actions.
         /// </summary>
-        public void GainHealth(int n)
+        public void GainHealth(double n)
         {
-            Healed += n;
+            Healed += Numbers.RoundToInt(n);
         }
 
         /// <summary>
         /// Increases Player's Barrier.
         /// </summary>
-        public void GainBarrier(int n)
+        public void GainBarrier(double n)
         {
             Effects.OnBarrerGain(this, ref n);
 
-            Barrier += n;
+            Barrier += Numbers.RoundToInt(n);
         }
 
         /// <summary>

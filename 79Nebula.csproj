@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="79Nebula\DataAccess\Enemy_DataAccess.cs" />
+    <Compile Include="79Nebula\Effects\Bleeding.cs" />
     <Compile Include="79Nebula\Effects\EnergyBoonAura.cs" />
     <Compile Include="79Nebula\Effects\InitiatorBonus.cs" />
     <Compile Include="79Nebula\Effects\_Template.cs" />
@@ -91,6 +92,12 @@
     <Compile Include="79Nebula\Enums\ModuleType.cs" />
     <Compile Include="79Nebula\Models\Player.cs" />
     <Compile Include="79Nebula\Models\PlayerBase.cs" />
+    <Compile Include="79Nebula\Modules\HealingWave.cs" />
+    <Compile Include="79Nebula\Modules\Minor Heal.cs" />
+    <Compile Include="79Nebula\Modules\Fast Heal.cs" />
+    <Compile Include="79Nebula\Modules\HeavyAttack.cs" />
+    <Compile Include="79Nebula\Modules\PowerAttack.cs" />
+    <Compile Include="79Nebula\Modules\Attack.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule1.cs" />
     <Compile Include="79Nebula\Modules\EnergyPrism.cs" />
     <Compile Include="79Nebula\Modules\_DefaultModule2.cs" />

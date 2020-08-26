@@ -54,7 +54,7 @@ namespace Nebula._79Nebula.Models
         /// <summary>
         /// Executes OnCrit() for each effect.
         /// </summary>
-        public void OnCrit(Player player, ref int valueOut)
+        public void OnCrit(Player player, ref double valueOut)
         {
             foreach (Effect effect in this)
             {
@@ -68,7 +68,7 @@ namespace Nebula._79Nebula.Models
         /// <summary>
         /// Executes OnCritAttack() for each effect.
         /// </summary>
-        public void OnCritAttack(Player player, ref int damageOut, ref bool isUnblockable)
+        public void OnCritAttack(Player player, ref double damageOut, ref bool isUnblockable)
         {
             foreach (Effect effect in this)
             {
@@ -82,7 +82,7 @@ namespace Nebula._79Nebula.Models
         /// <summary>
         /// Executes OnCritHeal() for each effect.
         /// </summary>
-        public void OnCritHeal(Player player, ref int healingOut)
+        public void OnCritHeal(Player player, ref double healingOut)
         {
             foreach (Effect effect in this)
             {
@@ -96,7 +96,7 @@ namespace Nebula._79Nebula.Models
         /// <summary>
         /// Executes OnIncomingCritAttack() for each effect.
         /// </summary>
-        public void OnIncomingCritAttack(Player player, ref int damageIn)
+        public void OnIncomingCritAttack(Player player, ref double damageIn)
         {
             foreach (Effect effect in this)
             {
@@ -110,7 +110,7 @@ namespace Nebula._79Nebula.Models
         /// <summary>
         /// Executes OnBarrerGain() for each effect.
         /// </summary>
-        public void OnBarrerGain(Player player, ref int barrierIn)
+        public void OnBarrerGain(Player player, ref double barrierIn)
         {
             foreach (Effect effect in this)
             {

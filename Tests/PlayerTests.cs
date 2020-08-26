@@ -128,10 +128,10 @@ namespace Tests
             player.TakeDamage(1);
             Assert.AreEqual(hp, player.Health);
 
-            player.TakeDamage(1, true);
+            player.TakeDamage(1, player.Attack, true);
             Assert.AreEqual(hp-1, player.Health);
 
-            player.TakeDamage(player.Defense + 1);
+            player.TakeDamage(player.Defense + 1, player.Attack);
             Assert.AreEqual(hp-2, player.Health);
         }
 

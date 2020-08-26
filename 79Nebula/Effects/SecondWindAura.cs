@@ -27,7 +27,7 @@ namespace Nebula._79Nebula.Effects
             player.InitiativeModifier -= 5;
         }
 
-        public override void OnCrit(Player player, ref int valueOut)
+        public override void OnCrit(Player player, ref double valueOut)
         {
             valueOut += 2;
         }
