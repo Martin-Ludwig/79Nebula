@@ -9,6 +9,11 @@ namespace Nebula._79Nebula.Models
     {
         public int CountActive { get { return this.FindAll(o => o.IsActive).Count; } }
 
+        public EffectList() : base()
+        {
+        }
+
+
         /// <summary>
         /// Returns the first element that matches the name,
         ///     if found; otherwise, the default value.

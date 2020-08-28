@@ -33,21 +33,21 @@ namespace Tests
 
 
         [Test]
-        public void LostTest()
+        public void Lost()
         {
             p2.StrengthModifier += 2;
             Assert.AreEqual(AutoBattleState.Lost, battle.Battle(p1, p2));
         }
 
         [Test]
-        public void WonTest()
+        public void Won()
         {
             p1.StrengthModifier += 2;
             Assert.AreEqual(AutoBattleState.Won, battle.Battle(p1, p2));
         }
 
         [Test]
-        public void DrawTest()
+        public void Draw()
         {
             Assert.AreEqual(AutoBattleState.Draw, battle.Battle(p1, p2));
         }

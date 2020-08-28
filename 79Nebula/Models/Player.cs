@@ -149,7 +149,7 @@ namespace Nebula._79Nebula.Models
         /// <returns>True if the effect is successfully applied, else false</returns>
         public bool ApplyEffect(Effect effect)
         {
-            if (effect is IStackable && this.HasEffect(effect) > 0)
+            if (effect is IStackable && HasEffect(effect) > 0)
             {
                 Effect e = Effects.FindEffect(effect);
                 e.AddStack(effect.StackSize);
@@ -255,6 +255,11 @@ namespace Nebula._79Nebula.Models
         /// <returns>Returns the amount of how often the effect is applied to the player.</returns>
         public int HasEffect(Effect effect)
         {
+            if (Effects.CountActive == 0)
+            {
+                return 0;
+            }
+
             int n = 0;
             if (effect is IStackable)
             {
@@ -346,11 +351,10 @@ namespace Nebula._79Nebula.Models
                 damage = damage * (Math.Pow(0.5, (opponent.Defense / Attack) + 0.5) + (Attack - opponent.Defense));
             }
 
-            int damageDealt = opponent.TakeDamage(damage, isUnblockable);
-
-            if (!isUnblockable && damageDealt <= 0)
+            int damageDealt;
+            if (!isUnblockable && damage <= 0)
             {   // Damage blocked
-
+                damageDealt = 0;
                 // Todo: Opponent Trigger OnAttackBlocked(attackDamage, isCrit)
                 // Todo: Player Trigger OnAttackBlockedByOpponent
             }
@@ -359,8 +363,11 @@ namespace Nebula._79Nebula.Models
                 if (isCrit)
                 {
                     opponent.ApplyEffect(new Bleeding(1));
+                    opponent.Effects.OnIncomingCritAttack(opponent, ref damage);
                 }
+                damageDealt = opponent.TakeDamage(damage);
             }
+
 
             // Todo: Trigger OnAfterPlayerAttack
 
@@ -368,20 +375,15 @@ namespace Nebula._79Nebula.Models
         }
 
         /// <summary>
-        /// Deals damage to the player. Damage is reduced by defense.
+        /// Deals damage to the player.
         /// Barrier absorbs the damage before it hits the player's health.
         /// Triggers various effects.
         /// </summary>
         /// <param name="damage"></param>
         /// <param name="ignoreDefense"></param>
         /// <returns></returns>
-        public int TakeDamage(double damage = 0, bool isCrit = false)
+        public int TakeDamage(double damage)
         {
-
-            if (isCrit)
-            {
-                Effects.OnIncomingCritAttack(this, ref damage);
-            }
 
             int incomingDamage = Numbers.RoundToInt(damage);
 

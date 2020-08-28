@@ -15,7 +15,7 @@ namespace Tests
         }
 
         [Test]
-        public void ZeroModulesTest()
+        public void ZeroModules()
         {
             Assert.Throws<PlayerCreationException>(
                 delegate { 
@@ -27,7 +27,7 @@ namespace Tests
         }
 
         [Test]
-        public void FifeModulesTest()
+        public void FifeModules()
         {
             Player test = new Player("Test Player", 1, 1, 1,
                 new List<string>() { "Default1", "Default2", "Default3", "Default4", "Default5" });
@@ -38,7 +38,7 @@ namespace Tests
         }
 
         [Test]
-        public void SixModulesTest()
+        public void SixModules()
         {
 
             Assert.Throws<PlayerCreationException>(
@@ -51,7 +51,7 @@ namespace Tests
         }
 
         [Test]
-        public void PriorityViolationTest()
+        public void PriorityViolation()
         {
             Assert.Throws<PlayerCreationException>(
                 delegate {

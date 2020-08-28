@@ -9,8 +9,7 @@ namespace Tests
 {
     class PlayerTests
     {
-        // Todo
-
+        
         Player player;
         int hp;
 
@@ -25,7 +24,7 @@ namespace Tests
         }
 
         [Test]
-        public void ModificationTests()
+        public void Modifications()
         {
             int tmp;
 
@@ -51,7 +50,7 @@ namespace Tests
         }
 
         [Test]
-        public void StrengthModificationTest()
+        public void StrengthModification()
         {
             int str = player.Strength;
             int att = player.Attack;
@@ -71,7 +70,7 @@ namespace Tests
         }
 
         [Test]
-        public void AgilityModificationTest()
+        public void AgilityModification()
         {
             int agi = player.Agility;
             int def = player.Defense;
@@ -89,7 +88,7 @@ namespace Tests
         }
 
         [Test]
-        public void IntelligenceModificationTest()
+        public void IntelligenceModification()
         {
             int intl = player.Intelligence;
             int att = player.Attack;
@@ -105,7 +104,7 @@ namespace Tests
         }
 
         [Test]
-        public void DamagedTest()
+        public void Damaged()
         {
             player.Damaged += 1;
 
@@ -114,7 +113,7 @@ namespace Tests
         }
 
         [Test]
-        public void HealedTest()
+        public void Healed()
         {
             player.Healed += 1;
 
@@ -123,26 +122,26 @@ namespace Tests
         }
 
         [Test]
-        public void TakeDamageTest()
+        public void TakeDamage()
         {
             player.TakeDamage(1);
-            Assert.AreEqual(hp, player.Health);
-
-            player.TakeDamage(1, player.Attack, true);
             Assert.AreEqual(hp-1, player.Health);
-
-            player.TakeDamage(player.Defense + 1, player.Attack);
-            Assert.AreEqual(hp-2, player.Health);
         }
 
         [Test]
-        public void HealTest()
+        public void Heal()
         {
-            int healing = player.Healing;
             player.Heal(5);
 
-            Assert.AreEqual(hp + healing + 5, player.Health);
+            Assert.AreEqual(hp + 5, player.Health);
         }
+
+        [Test]
+        public void AttackPlayer()
+        {
+            throw new NotImplementedException("Todo");
+        }
+
 
     }
 }
