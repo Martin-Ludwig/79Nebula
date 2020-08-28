@@ -30,11 +30,7 @@ namespace Tests
             }
             public override void OnRoundEnd(Player player)
             {
-                Duration--;
-                if (Duration <= 0)
-                {
-                    this.Remove();
-                }
+                this.DurationExpire(this);
             }
 
             public override bool Equals(object obj)

@@ -63,6 +63,7 @@ namespace Nebula._79Nebula.Models
         public int HealingModifier { get; set; } = 0;
         public int VitalityModifier { get; set; } = 0;
         public int CritBonus { get; set; } = 0;
+        public int BlockBonus { get; set; } = 0;
 
 
         // Base Stats + Modifier
@@ -323,12 +324,31 @@ namespace Nebula._79Nebula.Models
         }
 
         /// <summary>
+        /// Checks if enemy attack is blocked.
+        /// </summary>
+        private bool IsAttackBlocked(Player opponent)
+        {
+            int blockChance = opponent.BlockBonus;
+
+            if (Attack > opponent.Defense)
+            {
+                blockChance++;
+            }
+
+            if (blockChance >= 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Attacks a player. Triggers various effects.
         /// Opponent automatically blocks the attack when you deal zero damage.
         /// </summary>
-        /// <param name="opponent">Player object</param>
-        /// <param name="increasedAttack">Adds increased damage</param>
-        /// <param name="isUnblockable">Ignores Defense</param>
         /// <returns>Amount of damage dealt to the opponent</returns>
         public int AttackPlayer(Player opponent, double damage, bool isUnblockable = false, bool ignoreDefense = false, int critBase = 0)
         {
@@ -352,13 +372,7 @@ namespace Nebula._79Nebula.Models
             }
 
             int damageDealt;
-            if (!isUnblockable && damage <= 0)
-            {   // Damage blocked
-                damageDealt = 0;
-                // Todo: Opponent Trigger OnAttackBlocked(attackDamage, isCrit)
-                // Todo: Player Trigger OnAttackBlockedByOpponent
-            }
-            else
+            if (!isUnblockable && !IsAttackBlocked(opponent))
             {
                 if (isCrit)
                 {
@@ -367,7 +381,13 @@ namespace Nebula._79Nebula.Models
                 }
                 damageDealt = opponent.TakeDamage(damage);
             }
+            else
+            {   // Damage blocked
+                damageDealt = 0;
+                // Todo: Opponent Trigger OnAttackBlocked(attackDamage, isCrit)
+                // Todo: Player Trigger OnAttackBlockedByOpponent
 
+            }
 
             // Todo: Trigger OnAfterPlayerAttack
 
@@ -379,9 +399,6 @@ namespace Nebula._79Nebula.Models
         /// Barrier absorbs the damage before it hits the player's health.
         /// Triggers various effects.
         /// </summary>
-        /// <param name="damage"></param>
-        /// <param name="ignoreDefense"></param>
-        /// <returns></returns>
         public int TakeDamage(double damage)
         {
 

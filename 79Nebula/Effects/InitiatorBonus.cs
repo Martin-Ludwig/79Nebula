@@ -23,6 +23,7 @@ namespace Nebula._79Nebula.Effects
             player.AgilityModifier++;
             player.IntelligenceModifier++;
             player.CritBonus++;
+            player.BlockBonus++;
         }
 
         public override void OnRemove(Player player)
@@ -31,6 +32,7 @@ namespace Nebula._79Nebula.Effects
             player.AgilityModifier--;
             player.IntelligenceModifier--;
             player.CritBonus--;
+            player.BlockBonus--;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Nebula._79Nebula.Modules
 
         public override void OnApply(Player player)
         {
-            _defMod = player.Intelligence;
+            _defMod = PlayerBase.MinorMultiplier * player.Intelligence;
             player.DefenseModifier += _defMod;
         }
 
@@ -52,11 +52,7 @@ namespace Nebula._79Nebula.Modules
 
         public override void OnRoundEnd(Player player)
         {
-            Duration--;
-            if (Duration <= 0)
-            {
-                this.Remove();
-            }
+            this.DurationExpire(this);
         }
 
 
