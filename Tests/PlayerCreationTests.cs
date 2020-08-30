@@ -19,7 +19,7 @@ namespace Tests
         {
             Assert.Throws<PlayerCreationException>(
                 delegate { 
-                    new Player("Test Player", 1, 1, 1, 
+                    new Player("Test Player", WeaponType.Untyped, 
                         new List<string>() { }); 
                 });
 
@@ -29,7 +29,7 @@ namespace Tests
         [Test]
         public void FifeModules()
         {
-            Player test = new Player("Test Player", 1, 1, 1,
+            Player test = new Player("Test Player", WeaponType.Untyped,
                 new List<string>() { "Default1", "Default2", "Default3", "Default4", "Default5" });
             
             Assert.IsNotNull(test);
@@ -43,7 +43,7 @@ namespace Tests
 
             Assert.Throws<PlayerCreationException>(
                 delegate {
-                    new Player("Test Player", 1, 1, 1,
+                    new Player("Test Player", WeaponType.Untyped,
                         new List<string>() { "Default1", "Default2", "Default3", "Default4", "Default5", "Default6" });
                 });
 
@@ -55,7 +55,7 @@ namespace Tests
         {
             Assert.Throws<PlayerCreationException>(
                 delegate {
-                    new Player("Test Player", 1, 1, 1,
+                    new Player("Test Player", WeaponType.Untyped,
                         new List<string>() { "Default1", "Default2", "Default3", "Default6", "Default5" }); 
                 });
 

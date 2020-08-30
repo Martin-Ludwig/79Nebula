@@ -12,13 +12,13 @@ namespace Nebula._79Nebula.Models
 {
     public class Player : PlayerBase
     {
-        public Player(string name, int strength, int agility, int intelligence, List<string> modules)
-            : base(name, strength, agility, intelligence, modules)
+        public Player(string name, WeaponType weaponType, List<string> modules)
+            : base(name, weaponType, modules)
         {
             if (modules.Count != AutoBattle.MaxRounds)
             {   // Player equipped to much or less modules
                 throw new PlayerCreationException(
-                    $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). " +
+                    $"Could not instantiate Player({name}, Weapon: {Weapon}, Modules: [{string.Join(",", modules)}]). " +
                     $"The number of modules does not match the number of rounds. The player must have equipped exactly {AutoBattle.MaxRounds} modules. "
                 );
             }
@@ -37,7 +37,7 @@ namespace Nebula._79Nebula.Models
                     else
                     {   // Module's priority is out of range
                         throw new PlayerCreationException(
-                            $"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). " +
+                            $"Could not instantiate Player({name}, Weapon: {Weapon}, Modules: [{string.Join(",", modules)}]). " +
                             $"Priority of module #{i} (\"{modules[i]}\") is not in range. Expected priority {i - 1} between {i + 1}. "
                         );
                     }
@@ -45,7 +45,7 @@ namespace Nebula._79Nebula.Models
 
             } catch (ModuleNotFoundException e)
             {   // Module not found
-                throw new PlayerCreationException($"Could not instantiate Player({name}, {strength}/{agility}/{intelligence}, Modules: [{string.Join(",", modules)}]). \n\t{e} ");
+                throw new PlayerCreationException($"Could not instantiate Player({name}, Weapon: {Weapon}, Modules: [{string.Join(",", modules)}]). \n\t{e} ");
             }
 
         }
@@ -368,7 +368,7 @@ namespace Nebula._79Nebula.Models
 
             if (!ignoreDefense)
             {
-                damage = damage * (Math.Pow(0.5, (opponent.Defense / Attack) + 0.5) + (Attack - opponent.Defense));
+                damage *= (Math.Pow(0.5, (opponent.Defense / Attack) + 0.5) + (Attack - opponent.Defense));
             }
 
             int damageDealt;
@@ -520,7 +520,7 @@ namespace Nebula._79Nebula.Models
             modules = modules.Substring(0, modules.Length - 2);
 
 
-            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, Modules: [{modules}]";
+            return $"{Name}, {Health}hp, {Weapon} ({Strength}/{Agility}/{Intelligence}), Modules: [{modules}]";
         }
 
     }

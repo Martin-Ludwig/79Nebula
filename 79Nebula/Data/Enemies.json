@@ -2,9 +2,7 @@
   "Enemies": [
     {
       "Name": "Lizzie",
-      "Strength": 1,
-      "Agility": 1,
-      "Intelligence": 1,
+      "Weapon": "Gloves",
       "Modules": [
         "Default1",
         "Default2",
@@ -15,9 +13,7 @@
     },
     {
       "Name": "Mirza",
-      "Strength": 1,
-      "Agility": 0,
-      "Intelligence": 2,
+      "Weapon": "Staff",
       "Modules": [
         "Default1",
         "Default2",

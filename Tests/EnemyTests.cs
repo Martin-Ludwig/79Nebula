@@ -38,6 +38,8 @@ namespace Tests
             Enemy e = Enemies.Find(o => o.Name == name);
             Player p = e.ToPlayer();
 
+            Console.WriteLine(p);
+
             Assert.IsNotNull(p);
 
             Console.WriteLine(p);

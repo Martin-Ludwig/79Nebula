@@ -18,7 +18,7 @@ public class Battle_Button : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_player = new Player("Test Player", 1, 1, 1, new List<string>() {
+		_player = new Player("Test Player", WeaponType.Untyped, new List<string>() {
 				"Default1", "Default2", "Default3", "Default4", "Default5"
 			});
 

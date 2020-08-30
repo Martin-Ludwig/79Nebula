@@ -11,6 +11,8 @@ namespace Nebula._79Nebula.Models
         // Player's name
         public readonly string Name;
 
+        public virtual Weapon Weapon { get; }
+
         // Strength, agility and intelligence are the main attributes a player has.
         
         // Base Strength (Str)
@@ -78,18 +80,19 @@ namespace Nebula._79Nebula.Models
             set { this.HealthBase = value; }
         }
 
-        public PlayerBase(string name, int strength, int agility, int intelligence, List<string> modules)
+        public PlayerBase(string name, WeaponType weaponType, List<string> modules)
         {
+            Weapon = new Weapon(weaponType);
             Name = name;
-            Strength = strength;
-            Agility = agility;
-            Intelligence = intelligence;
+            Strength = Weapon.Strength;
+            Agility = Weapon.Agility;
+            Intelligence = Weapon.Intelligence;
             Modules = modules;
         }
 
         public override string ToString()
         {
-            return $"{Name}, {Health}hp, {Strength}/{Agility}/{Intelligence}, {Modules}";
+            return $"{Name}, {Health}hp, {Weapon} ({Strength}/{Agility}/{Intelligence}), Modules: {Modules}";
         }
 
     }

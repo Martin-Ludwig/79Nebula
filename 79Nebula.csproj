@@ -92,6 +92,7 @@
     <Compile Include="79Nebula\Enums\ModuleType.cs" />
     <Compile Include="79Nebula\Models\Player.cs" />
     <Compile Include="79Nebula\Models\PlayerBase.cs" />
+    <Compile Include="79Nebula\Models\Weapon.cs" />
     <Compile Include="79Nebula\Modules\HealingWave.cs" />
     <Compile Include="79Nebula\Modules\Minor Heal.cs" />
     <Compile Include="79Nebula\Modules\Fast Heal.cs" />

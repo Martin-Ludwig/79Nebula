@@ -21,11 +21,11 @@ namespace Tests
         public void Setup()
         {
             battle = new AutoBattle();
-            p1 = new Player("Test Player", 1, 1, 1, new List<string>() {
+            p1 = new Player("Test Player", WeaponType.Untyped, new List<string>() {
                 "Default1", "Default2", "Default3", "Default4", "Default5"
             });
 
-            p2 = new Player("Test Player", 1, 1, 1, new List<string>() {
+            p2 = new Player("Test Player", WeaponType.Untyped, new List<string>() {
                 "Default1", "Default2", "Default3", "Default4", "Default5"
             });
 

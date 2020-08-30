@@ -12,14 +12,8 @@ namespace Nebula._79Nebula.Models
         [JsonProperty("Name", Required = Required.Always)]
         public string Name { get; set; }
 
-        [JsonProperty("Strength", Required = Required.Always)]
-        public int Strength { get; set; }
-
-        [JsonProperty("Agility", Required = Required.Always)]
-        public int Agility { get; set; }
-
-        [JsonProperty("Intelligence", Required = Required.Always)]
-        public int Intelligence { get; set; }
+        [JsonProperty("Weapon", Required = Required.Always)]
+        public WeaponType weaponType{ get; set; }
 
         [JsonProperty("Modules", Required = Required.Always)]
         public List<string> Modules { get; set; }
@@ -30,7 +24,7 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         public Player ToPlayer()
         {
-            return new Player(Name, Strength, Agility, Intelligence, Modules);
+            return new Player(Name, weaponType, Modules);
         }
 
         /// <summary>
@@ -38,7 +32,7 @@ namespace Nebula._79Nebula.Models
         /// </summary>
         public PlayerBase ToPlayerBase()
         {
-            return new PlayerBase(Name, Strength, Agility, Intelligence, Modules);
+            return new PlayerBase(Name, weaponType, Modules);
         }
 
     }
